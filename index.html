@@ -249,6 +249,32 @@
   ul.retro-list li{padding-left:22px; position:relative; margin:4px 0;}
   ul.retro-list li::before{content:"›"; position:absolute; left:0; color:var(--neon-cyan);}
 
+  .fetch{
+    margin-top:20px;
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:0 24px;
+    border:1px solid var(--line);
+    background:#0f0726;
+    padding:16px 18px;
+    border-radius:6px;
+    font-size:16px;
+  }
+  .fetch pre{
+    grid-row:1 / -1;
+    color:var(--neon-cyan);
+    font-size:13px;
+    line-height:1.15;
+    margin:0;
+  }
+  .fetch dl{margin:0; display:contents;}
+  .fetch dt{color:var(--neon-magenta); font-family:'Chakra Petch',sans-serif; font-size:13px; letter-spacing:.04em; grid-column:2; margin-top:6px;}
+  .fetch dd{margin:0 0 2px; grid-column:2;}
+  @media (max-width:560px){
+    .fetch{grid-template-columns:1fr;}
+    .fetch pre{display:none;}
+  }
+
   /* SKILLS as HUD bars */
   .skill-row{display:grid; grid-template-columns:180px 1fr; gap:14px; align-items:center; margin:10px 0; font-family:'Chakra Petch', sans-serif; font-size:14px;}
   .skill-row .label{color:var(--text-dim); letter-spacing:.04em;}
@@ -263,29 +289,49 @@
     border-left:3px solid var(--neon-magenta);
   }
 
-  .broken-cat{
-    margin-top:16px;
-    border:1px dashed var(--line);
-    padding:14px;
-    text-align:center;
-    font-family:monospace;
-    color:var(--neon-amber);
-    background:#0f0726;
+  .broken-cat{margin-top:16px;}
+  .broken-cat > .caption{font-family:'Chakra Petch',sans-serif; font-size:12px; color:var(--neon-cyan); letter-spacing:.04em; margin-bottom:10px; text-align:center;}
+  .meme-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:12px;
   }
-  .ascii-cat{white-space:pre; line-height:1.05; font-size:13px; color:var(--phosphor); margin:0 0 8px;}
-  .broken-cat small{display:block; margin-top:6px; color:var(--text-dim); font-family:'Chakra Petch',sans-serif; font-size:11px; letter-spacing:.04em;}
-  .real-cat{
-    max-width:260px;
-    width:100%;
+  .meme{
+    position:relative;
+    border:2px solid var(--line);
     border-radius:6px;
-    border:2px solid var(--neon-cyan);
-    box-shadow:0 0 22px rgba(0,240,255,.35);
-    margin:0 auto 12px;
-    display:block;
-    transition:transform .25s ease;
+    overflow:hidden;
+    aspect-ratio:1/1;
+    background:#000;
   }
-  .real-cat:hover{transform:rotate(-2deg) scale(1.03);}
-  .broken-cat .caption{font-family:'Chakra Petch',sans-serif; font-size:12px; color:var(--neon-cyan); letter-spacing:.04em; margin-bottom:14px;}
+  .meme img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition:transform .3s ease;
+  }
+  .meme:hover img{transform:scale(1.06);}
+  .meme .cap{
+    position:absolute;
+    left:0; right:0;
+    font-family:'Chakra Petch', sans-serif;
+    font-weight:700;
+    text-transform:uppercase;
+    color:#fff;
+    text-align:center;
+    font-size:12px;
+    line-height:1.25;
+    text-shadow:2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+    padding:0 6px;
+  }
+  .meme .cap.top{top:8px;}
+  .meme .cap.bottom{bottom:8px;}
+  .ascii-cat{white-space:pre; line-height:1.05; font-size:13px; color:var(--phosphor); margin:14px 0 0; text-align:center;}
+  .broken-cat small{display:block; margin-top:8px; color:var(--text-dim); font-family:'Chakra Petch',sans-serif; font-size:11px; letter-spacing:.04em; text-align:center;}
+  @media (max-width:560px){
+    .meme-grid{grid-template-columns:1fr; }
+  }
 
   /* CLASSIFIED */
   .classified{
@@ -516,14 +562,32 @@
       Hello, friend — I'm Loel, an Electrical Engineering student and tutor for Programming, Computer Applications, and Operating Systems.
     </p>
     <p>
-      I'm mostly an introvert who's fluent in code, cybersecurity, and gaming. When I'm off the clock, you'll find me:
+      I'm mostly an introvert who's fluent in code, cybersecurity, and gaming. I like breaking things apart to understand them —
+      circuits, systems, networks, plots — and I tutor because explaining something well is the fastest way to find out if you actually understand it.
     </p>
+    <p>When I'm off the clock, you'll find me:</p>
     <ul class="retro-list">
       <li>Running</li>
       <li>Skating</li>
       <li>Writing fiction</li>
     </ul>
     <p class="dim">// there's more, but that's the highlight reel for now.</p>
+
+    <div class="fetch">
+      <pre>   /\_/\
+  ( o.o )
+   > ^ &lt;</pre>
+      <dl>
+        <dt>OS</dt><dd>LoelOS (Cat Edition)</dd>
+        <dt>Host</dt><dd>Electrical Engineering, in progress</dd>
+        <dt>Shell</dt><dd>bash + a healthy amount of sarcasm</dd>
+        <dt>Uptime</dt><dd>currently debugging something</dd>
+        <dt>Currently_Playing</dt><dd>The Last of Us Part II (again)</dd>
+        <dt>Currently_Learning</dt><dd>whatever breaks next</dd>
+        <dt>CPU</dt><dd>caffeine-powered</dd>
+        <dt>Known_Bug</dt><dd>despises front-end, does it anyway</dd>
+      </dl>
+    </div>
   </section>
 
   <!-- 02 SKILLS -->
@@ -540,20 +604,49 @@
     <div class="skill-row"><span class="label">ETHICAL HACKING</span><div class="bar"><span style="width:85%"></span></div></div>
     <div class="skill-row"><span class="label">NETWORKS</span><div class="bar"><span style="width:82%"></span></div></div>
     <div class="skill-row"><span class="label">SOCIAL ENGINEERING</span><div class="bar"><span style="width:88%"></span></div></div>
+    <div class="skill-row"><span class="label">CIRCUITS &amp; ELECTRICAL ENG</span><div class="bar"><span style="width:78%"></span></div></div>
 
     <p style="margin-top:18px;" class="dim">...and quite a lot more.</p>
+
+    <p class="dim" style="margin-top:22px;">// tools I reach for most</p>
+    <ul class="retro-list" style="columns:2;">
+      <li>Python</li>
+      <li>C / C++</li>
+      <li>JavaScript</li>
+      <li>Linux</li>
+      <li>Wireshark</li>
+      <li>Burp Suite</li>
+      <li>Git</li>
+      <li>Figma (grudgingly)</li>
+    </ul>
 
     <div class="quote-box">
       <b style="color:#fff;">Unpopular opinion:</b> front-end and back-end have to work together for a project to breathe — but I still despise front-end.
     </div>
 
     <div class="broken-cat">
-      <img class="real-cat" src="https://images.pexels.com/photos/19147470/pexels-photo-19147470.jpeg?auto=compress&cs=tinysrgb&h=627&fit=crop&w=1200" alt="a very startled-looking fluffy cat, presumably reacting to my front-end code">
-      <p class="caption">exhibit A: this is genuinely how I look at a CSS bug</p>
+      <p class="caption">exhibit A through C: how I actually look debugging CSS</p>
+      <div class="meme-grid">
+        <div class="meme">
+          <img src="https://images.pexels.com/photos/19147470/pexels-photo-19147470.jpeg?auto=compress&cs=tinysrgb&h=627&fit=crop&w=1200" alt="startled wide-eyed cat, meme captioned about seeing unindented code">
+          <span class="cap top">ME SEEING</span>
+          <span class="cap bottom">UNINDENTED CODE</span>
+        </div>
+        <div class="meme">
+          <img src="https://images.pexels.com/photos/18137890/pexels-photo-18137890.jpeg?auto=compress&cs=tinysrgb&h=627&fit=crop&w=1200" alt="calico cat lounging smugly on a chair, meme captioned about pushing straight to main">
+          <span class="cap top">WHEN IT WORKS</span>
+          <span class="cap bottom">FIRST TRY (SUSPICIOUS)</span>
+        </div>
+        <div class="meme">
+          <img src="https://images.pexels.com/photos/4587960/pexels-photo-4587960.jpeg?auto=compress&cs=tinysrgb&h=627&fit=crop&w=1200" alt="tabby cat wearing sunglasses, meme captioned about running a penetration test">
+          <span class="cap top">ME, RUNNING</span>
+          <span class="cap bottom">A "PEN TEST"</span>
+        </div>
+      </div>
       <pre class="ascii-cat"> /\_/\
 ( o.o )
  > ^ <</pre>
-      <small>backup cat.jpg — for when the wifi (or my patience for front-end) goes down.</small>
+      <small>backup cat.txt — for when the wifi (or my patience for front-end) goes down.</small>
     </div>
   </section>
 
@@ -588,6 +681,12 @@
       <tbody>
         <tr><td>Food</td><td>Strangers</td></tr>
         <tr><td>Basketball</td><td>Soccer</td></tr>
+        <tr><td>Cats</td><td>Small talk</td></tr>
+        <tr><td>Retro tech &amp; synthwave</td><td>Front-end debugging</td></tr>
+        <tr><td>The Last of Us Part II</td><td>Spoilers</td></tr>
+        <tr><td>Late-night coding sessions</td><td>Slow wifi</td></tr>
+        <tr><td>The command line</td><td>Overly-cluttered GUIs</td></tr>
+        <tr><td>A good plot twist</td><td>Predictable endings</td></tr>
       </tbody>
     </table>
   </section>
