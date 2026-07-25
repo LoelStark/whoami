@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loel // portfolio.sh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Space+Mono:wght@400;700&family=Chakra+Petch:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-void:#0a0118;
+    --bg-panel:#150a2e;
+    --bg-panel-2:#1c1040;
+    --neon-cyan:#00f0ff;
+    --neon-magenta:#ff2079;
+    --neon-amber:#ffb627;
+    --grid-purple:#6b2fb3;
+    --phosphor:#39ff88;
+    --text-dim:#9a8cc0;
+    --line:#3a2666;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--bg-void);
+    color:var(--phosphor);
+    font-family:'Space Mono', monospace;
+    font-size:20px;
+    line-height:1.5;
+    padding:28px 14px;
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  /* ambient scanlines over whole page */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.035) 0px,
+      rgba(255,255,255,0.035) 1px,
+      transparent 2px,
+      transparent 3px
+    );
+    z-index:999;
+    mix-blend-mode:overlay;
+  }
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.55) 100%);
+    z-index:998;
+  }
+
+  .crt{
+    max-width:900px;
+    margin:0 auto;
+    background:var(--bg-panel);
+    border:2px solid var(--line);
+    border-radius:10px;
+    box-shadow:0 0 0 1px rgba(0,240,255,0.08), 0 0 40px rgba(107,47,179,0.5), 0 0 80px rgba(0,240,255,0.08);
+    overflow:hidden;
+  }
+
+  .titlebar{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 16px;
+    background:var(--bg-panel-2);
+    border-bottom:1px solid var(--line);
+    font-family:'Chakra Petch', sans-serif;
+    font-size:13px;
+    letter-spacing:.04em;
+    color:var(--text-dim);
+  }
+  .dots{display:flex;gap:6px;}
+  .dots span{width:10px;height:10px;border-radius:50%;display:inline-block;}
+  .dots span:nth-child(1){background:#ff5f56;}
+  .dots span:nth-child(2){background:#ffbd2e;}
+  .dots span:nth-child(3){background:#27c93f;}
+  .titlebar .path{margin-left:auto;opacity:.7;}
+
+  /* ===== TICKER ===== */
+  .ticker{
+    background:var(--neon-magenta);
+    color:#0a0118;
+    overflow:hidden;
+    white-space:nowrap;
+    border-bottom:1px solid var(--line);
+  }
+  .ticker-track{
+    display:inline-block;
+    padding-left:100%;
+    animation:scroll-left 32s linear infinite;
+    font-family:'Chakra Petch', sans-serif;
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    padding-top:7px;
+    padding-bottom:7px;
+  }
+  .ticker-track span{margin-right:36px;}
+  @keyframes scroll-left{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-100%);}
+  }
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    padding:70px 24px 50px;
+    text-align:center;
+    overflow:hidden;
+    background:linear-gradient(180deg, #150a2e 0%, #1a0a3a 55%, #150a2e 100%);
+    border-bottom:1px solid var(--line);
+  }
+  .sun{
+    position:absolute;
+    left:50%;
+    top:38px;
+    width:150px;
+    height:150px;
+    transform:translateX(-50%);
+    border-radius:50%;
+    background:linear-gradient(180deg, var(--neon-amber) 0%, var(--neon-magenta) 100%);
+    box-shadow:0 0 60px rgba(255,32,121,.55);
+    z-index:0;
+  }
+  .sun::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:repeating-linear-gradient(
+      to bottom,
+      transparent 0 6px,
+      var(--bg-panel) 6px 11px
+    );
+    opacity:.85;
+  }
+  .grid{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    height:130px;
+    background-image:
+      linear-gradient(var(--grid-purple) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-purple) 1px, transparent 1px);
+    background-size:36px 22px;
+    -webkit-mask-image:linear-gradient(to top, black, transparent);
+    mask-image:linear-gradient(to top, black, transparent);
+    transform:perspective(220px) rotateX(60deg);
+    transform-origin:bottom;
+    opacity:.65;
+    z-index:0;
+  }
+  .hero-content{position:relative;z-index:2;}
+  .glitch{
+    font-family:'Orbitron', sans-serif;
+    font-weight:800;
+    font-size:clamp(42px, 11vw, 78px);
+    margin:14px 0 6px;
+    color:#fff;
+    text-shadow:3px 0 var(--neon-cyan), -3px 0 var(--neon-magenta), 0 0 40px rgba(0,240,255,.35);
+    letter-spacing:4px;
+    animation:flicker 4.5s infinite;
+  }
+  @keyframes flicker{
+    0%,93%,100%{opacity:1;}
+    94%{opacity:.6;}
+    95%{opacity:1;}
+    96%{opacity:.75;}
+    97%{opacity:1;}
+  }
+  .subtitle{
+    font-family:'Chakra Petch', sans-serif;
+    color:var(--neon-cyan);
+    font-size:16px;
+    letter-spacing:.06em;
+    min-height:22px;
+    white-space:nowrap;
+    overflow:hidden;
+    border-right:2px solid var(--neon-cyan);
+    display:inline-block;
+    animation:typing 3s steps(46,end) 1 both, blink-caret .8s step-end infinite;
+  }
+  @keyframes typing{from{width:0;} to{width:46ch;}}
+  @keyframes blink-caret{50%{border-color:transparent;}}
+
+  .status{
+    margin-top:22px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'Chakra Petch', sans-serif;
+    font-size:13px;
+    letter-spacing:.08em;
+    color:var(--phosphor);
+    border:1px solid var(--line);
+    padding:6px 14px;
+    border-radius:20px;
+    background:rgba(57,255,136,0.06);
+  }
+  .status .dot{width:8px;height:8px;border-radius:50%;background:var(--phosphor);box-shadow:0 0 8px var(--phosphor);animation:pulse 1.6s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+  /* ===== SECTIONS ===== */
+  section{
+    padding:38px 26px;
+    border-bottom:1px dashed var(--line);
+  }
+  section:last-of-type{border-bottom:none;}
+
+  .sec-head{
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+    margin-bottom:18px;
+    font-family:'Chakra Petch', sans-serif;
+  }
+  .sec-num{
+    color:var(--neon-magenta);
+    font-size:14px;
+    letter-spacing:.1em;
+    border:1px solid var(--neon-magenta);
+    padding:2px 8px;
+    border-radius:3px;
+  }
+  .sec-title{
+    color:#fff;
+    font-size:20px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    font-weight:600;
+  }
+  .prompt{color:var(--neon-cyan);}
+  .dim{color:var(--text-dim);}
+
+  ul.retro-list{margin:10px 0; padding-left:0; list-style:none;}
+  ul.retro-list li{padding-left:22px; position:relative; margin:4px 0;}
+  ul.retro-list li::before{content:"›"; position:absolute; left:0; color:var(--neon-cyan);}
+
+  /* SKILLS as HUD bars */
+  .skill-row{display:grid; grid-template-columns:180px 1fr; gap:14px; align-items:center; margin:10px 0; font-family:'Chakra Petch', sans-serif; font-size:14px;}
+  .skill-row .label{color:var(--text-dim); letter-spacing:.04em;}
+  .bar{height:10px; background:#0f0726; border:1px solid var(--line); border-radius:2px; overflow:hidden;}
+  .bar span{display:block; height:100%; background:linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta)); box-shadow:0 0 8px rgba(0,240,255,.6);}
+
+  .quote-box{
+    margin-top:22px;
+    border:1px solid var(--line);
+    background:rgba(255,32,121,0.05);
+    padding:14px 16px;
+    border-left:3px solid var(--neon-magenta);
+  }
+
+  .broken-cat{
+    margin-top:16px;
+    border:1px dashed var(--line);
+    padding:14px;
+    text-align:center;
+    font-family:monospace;
+    color:var(--neon-amber);
+    background:#0f0726;
+  }
+  .ascii-cat{white-space:pre; line-height:1.05; font-size:13px; color:var(--phosphor); margin:0 0 8px;}
+  .broken-cat small{display:block; margin-top:6px; color:var(--text-dim); font-family:'Chakra Petch',sans-serif; font-size:11px; letter-spacing:.04em;}
+  .real-cat{
+    max-width:260px;
+    width:100%;
+    border-radius:6px;
+    border:2px solid var(--neon-cyan);
+    box-shadow:0 0 22px rgba(0,240,255,.35);
+    margin:0 auto 12px;
+    display:block;
+    transition:transform .25s ease;
+  }
+  .real-cat:hover{transform:rotate(-2deg) scale(1.03);}
+  .broken-cat .caption{font-family:'Chakra Petch',sans-serif; font-size:12px; color:var(--neon-cyan); letter-spacing:.04em; margin-bottom:14px;}
+
+  /* CLASSIFIED */
+  .classified{
+    border:1px solid var(--neon-amber);
+    background:rgba(255,182,39,0.05);
+    padding:16px;
+    position:relative;
+  }
+  .classified .stamp{
+    font-family:'Orbitron', sans-serif;
+    font-size:11px;
+    color:var(--neon-amber);
+    border:2px solid var(--neon-amber);
+    display:inline-block;
+    padding:6px 10px;
+    transform:rotate(-3deg);
+    margin-bottom:12px;
+  }
+  .redacted{
+    filter:blur(5px);
+    transition:filter .4s ease;
+    cursor:pointer;
+  }
+  .classified:hover .redacted, .classified:focus-within .redacted{filter:blur(0);}
+  .classified .hint{font-family:'Chakra Petch',sans-serif; font-size:11px; color:var(--text-dim); margin-top:10px; letter-spacing:.04em;}
+
+  /* TABLE */
+  table{width:100%; border-collapse:collapse; margin-top:10px; font-family:'Space Mono',monospace; font-size:19px;}
+  thead th{
+    font-family:'Chakra Petch',sans-serif;
+    font-size:13px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--bg-void);
+    background:var(--neon-cyan);
+    padding:8px 12px;
+    text-align:left;
+  }
+  thead th:last-child{background:var(--neon-magenta);}
+  tbody td{padding:8px 12px; border-bottom:1px solid var(--line);}
+  tbody tr:nth-child(odd){background:rgba(255,255,255,0.02);}
+
+  /* PUNS & QUOTES */
+  .pun-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    gap:14px;
+    margin-top:14px;
+  }
+  .pun-card{
+    background:#0f0726;
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:16px;
+    position:relative;
+    transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .pun-card:hover{
+    transform:translateY(-4px) rotate(-0.6deg);
+    border-color:var(--neon-cyan);
+    box-shadow:0 8px 24px rgba(0,240,255,.18);
+  }
+  .pun-card .tag{
+    font-family:'Chakra Petch', sans-serif;
+    font-size:10px;
+    letter-spacing:.1em;
+    color:var(--neon-amber);
+    text-transform:uppercase;
+    margin-bottom:8px;
+    display:inline-block;
+  }
+  .pun-card p{margin:0; font-size:18px; line-height:1.4;}
+  .pun-card .by{
+    display:block;
+    margin-top:10px;
+    font-family:'Chakra Petch', sans-serif;
+    font-size:11px;
+    color:var(--text-dim);
+    letter-spacing:.05em;
+  }
+
+  /* CONTACT */
+  .term-field{margin:14px 0;}
+  .term-field label{
+    display:block;
+    color:var(--neon-cyan);
+    font-family:'Chakra Petch',sans-serif;
+    font-size:13px;
+    letter-spacing:.06em;
+    margin-bottom:6px;
+  }
+  .term-field label::before{content:"> ";}
+  .term-field input{
+    width:100%;
+    background:#0f0726;
+    border:1px solid var(--line);
+    color:var(--phosphor);
+    font-family:'Space Mono',monospace;
+    font-size:19px;
+    padding:10px 12px;
+    border-radius:3px;
+    outline:none;
+  }
+  .term-field input:focus{border-color:var(--neon-cyan); box-shadow:0 0 0 1px var(--neon-cyan) inset;}
+
+  .send-btn{
+    margin-top:6px;
+    font-family:'Chakra Petch',sans-serif;
+    letter-spacing:.08em;
+    font-size:13px;
+    background:transparent;
+    color:var(--neon-magenta);
+    border:1px solid var(--neon-magenta);
+    padding:10px 18px;
+    border-radius:3px;
+    cursor:pointer;
+    transition:.2s;
+  }
+  .send-btn:hover{background:var(--neon-magenta); color:var(--bg-void); box-shadow:0 0 20px rgba(255,32,121,.6);}
+  .send-note{margin-top:10px; font-size:14px; color:var(--text-dim); min-height:20px;}
+  .direct-line{margin-top:16px; font-size:16px;}
+  .direct-line a{color:var(--neon-cyan);}
+
+  /* PLATFORMS as dir listing */
+  .dirlist{font-family:'Space Mono', monospace; font-size:18px;}
+  .dirlist .row{display:grid; grid-template-columns:110px 1fr; gap:10px; padding:4px 0; border-bottom:1px dotted var(--line);}
+  .dirlist .perm{color:var(--text-dim);}
+  .dirlist a{color:var(--neon-amber); text-decoration:none;}
+  .dirlist a:hover{text-decoration:underline; color:var(--neon-cyan);}
+
+  /* TERMINAL PROMPT (signature interactive element) */
+  .console{
+    padding:26px;
+    background:#0d0620;
+  }
+  .console-out{
+    min-height:120px;
+    max-height:220px;
+    overflow-y:auto;
+    font-size:17px;
+    margin-bottom:10px;
+    white-space:pre-wrap;
+  }
+  .console-out .line{margin:2px 0;}
+  .console-out .sys{color:var(--text-dim);}
+  .console-out .echo{color:#fff;}
+  .console-line{display:flex; align-items:center; gap:8px;}
+  .console-line .p{color:var(--neon-cyan); font-size:19px;}
+  .console-line input{
+    flex:1;
+    background:transparent;
+    border:none;
+    outline:none;
+    color:var(--phosphor);
+    font-family:'Space Mono',monospace;
+    font-size:19px;
+  }
+
+  footer{
+    text-align:center;
+    padding:16px;
+    font-family:'Chakra Petch',sans-serif;
+    font-size:11px;
+    letter-spacing:.08em;
+    color:var(--text-dim);
+  }
+
+  a{color:var(--neon-cyan);}
+
+  @media (max-width:560px){
+    body{font-size:18px;}
+    .skill-row{grid-template-columns:1fr; gap:4px;}
+    .dirlist .row{grid-template-columns:90px 1fr;}
+    .subtitle{white-space:normal; border-right:none; animation:none; width:auto;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="crt">
+
+  <div class="titlebar">
+    <div class="dots"><span></span><span></span><span></span></div>
+    <span>loel@root: ~</span>
+    <span class="path">./portfolio.sh</span>
+  </div>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <span>404: SOCIAL LIFE NOT FOUND</span>
+      <span>CTRL+Z WORKS ON CODE, NOT ON LIFE CHOICES</span>
+      <span>WARNING: MAY START TALKING ABOUT THE LAST OF US 2 UNPROMPTED</span>
+      <span>THERE ARE 10 TYPES OF PEOPLE: THOSE WHO GET BINARY AND THOSE WHO DON'T</span>
+      <span>CATS.EXE IS ALWAYS RUNNING IN THE BACKGROUND</span>
+      <span>404: SOCIAL LIFE NOT FOUND</span>
+      <span>CTRL+Z WORKS ON CODE, NOT ON LIFE CHOICES</span>
+      <span>WARNING: MAY START TALKING ABOUT THE LAST OF US 2 UNPROMPTED</span>
+      <span>THERE ARE 10 TYPES OF PEOPLE: THOSE WHO GET BINARY AND THOSE WHO DON'T</span>
+      <span>CATS.EXE IS ALWAYS RUNNING IN THE BACKGROUND</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="sun"></div>
+    <div class="grid"></div>
+    <div class="hero-content">
+      <div class="dim" style="font-family:'Chakra Petch',sans-serif; font-size:13px; letter-spacing:.2em;">BOOT SEQUENCE COMPLETE</div>
+      <h1 class="glitch">LOEL</h1>
+      <div class="subtitle">&gt; electrical_engineer // tutor // hacker // gamer_</div>
+      <div class="status"><span class="dot"></span>SYSTEM ONLINE</div>
+    </div>
+  </div>
+
+  <!-- 01 ABOUT -->
+  <section id="about">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <span class="sec-title">About_Me</span>
+    </div>
+    <p><span class="prompt">$</span> whoami</p>
+    <p>
+      Hello, friend — I'm Loel, an Electrical Engineering student and tutor for Programming, Computer Applications, and Operating Systems.
+    </p>
+    <p>
+      I'm mostly an introvert who's fluent in code, cybersecurity, and gaming. When I'm off the clock, you'll find me:
+    </p>
+    <ul class="retro-list">
+      <li>Running</li>
+      <li>Skating</li>
+      <li>Writing fiction</li>
+    </ul>
+    <p class="dim">// there's more, but that's the highlight reel for now.</p>
+  </section>
+
+  <!-- 02 SKILLS -->
+  <section id="skills">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <span class="sec-title">Skills.dat</span>
+    </div>
+    <p class="dim">// character sheet — stats pulled from years in the field, not just the tech tree.</p>
+
+    <div class="skill-row"><span class="label">PHOTOGRAPHY</span><div class="bar"><span style="width:70%"></span></div></div>
+    <div class="skill-row"><span class="label">GAMING</span><div class="bar"><span style="width:95%"></span></div></div>
+    <div class="skill-row"><span class="label">FULL-STACK DEV</span><div class="bar"><span style="width:80%"></span></div></div>
+    <div class="skill-row"><span class="label">ETHICAL HACKING</span><div class="bar"><span style="width:85%"></span></div></div>
+    <div class="skill-row"><span class="label">NETWORKS</span><div class="bar"><span style="width:82%"></span></div></div>
+    <div class="skill-row"><span class="label">SOCIAL ENGINEERING</span><div class="bar"><span style="width:88%"></span></div></div>
+
+    <p style="margin-top:18px;" class="dim">...and quite a lot more.</p>
+
+    <div class="quote-box">
+      <b style="color:#fff;">Unpopular opinion:</b> front-end and back-end have to work together for a project to breathe — but I still despise front-end.
+    </div>
+
+    <div class="broken-cat">
+      <img class="real-cat" src="https://images.pexels.com/photos/19147470/pexels-photo-19147470.jpeg?auto=compress&cs=tinysrgb&h=627&fit=crop&w=1200" alt="a very startled-looking fluffy cat, presumably reacting to my front-end code">
+      <p class="caption">exhibit A: this is genuinely how I look at a CSS bug</p>
+      <pre class="ascii-cat"> /\_/\
+( o.o )
+ > ^ <</pre>
+      <small>backup cat.jpg — for when the wifi (or my patience for front-end) goes down.</small>
+    </div>
+  </section>
+
+  <!-- 03 FUTURE GOALS -->
+  <section id="goals">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <span class="sec-title">Future_Goals</span>
+    </div>
+    <div class="classified" tabindex="0">
+      <span class="stamp">CLASSIFIED</span>
+      <p class="redacted">
+        I normally keep this to myself — "keep it private until it's permanent" — but here's the honest version:
+        I'm working toward becoming a data engineer for a few major companies, with an honorable mention for <b>Google</b>.
+        My reasoning is simple — think about the sheer volume of data flowing through a company like that. Getting to work
+        across datasets at that scale is mind-blowing to me.
+      </p>
+      <p class="hint">hover / tap to decrypt file</p>
+    </div>
+  </section>
+
+  <!-- 04 LIKES / DISLIKES -->
+  <section id="likes">
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <span class="sec-title">Likes // Dislikes</span>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Likes.log</th><th>Dislikes.log</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Food</td><td>Strangers</td></tr>
+        <tr><td>Basketball</td><td>Soccer</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 05 PUNS & QUOTES -->
+  <section id="puns">
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <span class="sec-title">Puns_&amp;_Quotes.txt</span>
+    </div>
+    <p class="dim">// a random sample from the buffer. refresh reality to shuffle.</p>
+    <div class="pun-grid">
+      <div class="pun-card">
+        <span class="tag">pun</span>
+        <p>I'd tell you a UDP joke, but you might not get it.</p>
+      </div>
+      <div class="pun-card">
+        <span class="tag">quote</span>
+        <p>There are only two hard things in computer science: cache invalidation, naming things, and off-by-one errors.</p>
+        <span class="by">— programmer folklore</span>
+      </div>
+      <div class="pun-card">
+        <span class="tag">pun</span>
+        <p>Why do cats make terrible storytellers? They only have one tail.</p>
+      </div>
+      <div class="pun-card">
+        <span class="tag">hacking</span>
+        <p>Passwords are like underwear: change them often, don't share them, and don't leave them lying around.</p>
+      </div>
+      <div class="pun-card">
+        <span class="tag">pun</span>
+        <p>I've got a great joke about TCP, but I'll only tell it if you're ready to receive it.</p>
+      </div>
+      <div class="pun-card">
+        <span class="tag">quote</span>
+        <p>The most dangerous phrase in the language is "we've always done it this way."</p>
+        <span class="by">— Grace Hopper</span>
+      </div>
+      <div class="pun-card">
+        <span class="tag">pun</span>
+        <p>My code doesn't have bugs. It just develops random features.</p>
+      </div>
+      <div class="pun-card">
+        <span class="tag">gaming</span>
+        <p>In The Last of Us Part II, everyone's the protagonist of their own story. Also, never trust a golf club.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 CONTACT -->
+  <section id="contact">
+    <div class="sec-head">
+      <span class="sec-num">06</span>
+      <span class="sec-title">Contact</span>
+    </div>
+    <p class="dim">// fill in the fields below — a programmer's job is to make your life simpler (mine first, though).</p>
+
+    <form id="contact-form">
+      <div class="term-field">
+        <label for="name">NAME</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+      </div>
+      <div class="term-field">
+        <label for="email">EMAIL</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+      </div>
+      <button type="submit" class="send-btn">[ SEND_TRANSMISSION ]</button>
+      <div class="send-note" id="send-note"></div>
+    </form>
+
+    <p class="direct-line">Prefer the direct route? <a href="mailto:your-email@example.com">click here to email me</a></p>
+  </section>
+
+  <!-- 07 PLATFORMS -->
+  <section id="platforms">
+    <div class="sec-head">
+      <span class="sec-num">07</span>
+      <span class="sec-title">Platforms</span>
+    </div>
+    <div class="dirlist">
+      <div class="row"><span class="perm">drwxr-xr-x</span><a href="https://github.com/LoelStark" target="_blank" rel="noopener">github/LoelStark</a></div>
+      <div class="row"><span class="perm">drwxr-xr-x</span><a href="#" target="_blank" rel="noopener">linkedin/Doctor-Mkhonza</a></div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE TERMINAL -->
+  <div class="console">
+    <div class="console-out" id="console-out">
+      <div class="line sys">Type 'help' for a list of commands. Try 'cat' or 'joke' if you dare.</div>
+    </div>
+    <div class="console-line">
+      <span class="p">guest@loel:~$</span>
+      <input type="text" id="console-in" autocomplete="off" spellcheck="false" placeholder="type a command...">
+    </div>
+  </div>
+
+  <footer>© <span id="year"></span> LOEL — BUILT WITH HTML, CSS, AND MILD PARANOIA</footer>
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // fake contact form handling (static site, no backend)
+  const form = document.getElementById('contact-form');
+  const note = document.getElementById('send-note');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    note.textContent = 'Transmission received. Standing by for a reply.';
+  });
+
+  // interactive terminal easter egg
+  const out = document.getElementById('console-out');
+  const input = document.getElementById('console-in');
+
+  function printLine(text, cls){
+    const div = document.createElement('div');
+    div.className = 'line ' + (cls || '');
+    div.textContent = text;
+    out.appendChild(div);
+    out.scrollTop = out.scrollHeight;
+  }
+
+  const jokes = [
+    'why did the hacker cross the road? to get to the other IDE.',
+    'there is no place like 127.0.0.1',
+    'a SQL query walks into a bar, walks up to two tables and asks, "can I join you?"'
+  ];
+
+  const commands = {
+    help: function(){
+      printLine('available commands: help, about, skills, goals, likes, puns, contact, platforms, cat, joke, clear', 'sys');
+    },
+    about: function(){ document.getElementById('about').scrollIntoView({behavior:'smooth'}); },
+    skills: function(){ document.getElementById('skills').scrollIntoView({behavior:'smooth'}); },
+    goals: function(){ document.getElementById('goals').scrollIntoView({behavior:'smooth'}); },
+    likes: function(){ document.getElementById('likes').scrollIntoView({behavior:'smooth'}); },
+    puns: function(){ document.getElementById('puns').scrollIntoView({behavior:'smooth'}); },
+    contact: function(){ document.getElementById('contact').scrollIntoView({behavior:'smooth'}); },
+    platforms: function(){ document.getElementById('platforms').scrollIntoView({behavior:'smooth'}); },
+    cat: function(){
+      printLine(' /\\_/\\ ', 'sys');
+      printLine('( ^.^ )  meow. you found the easter egg.', 'sys');
+      printLine(' > ^ <  fun fact: cat is also a real linux command.', 'sys');
+    },
+    joke: function(){
+      printLine(jokes[Math.floor(Math.random() * jokes.length)], 'sys');
+    },
+    clear: function(){ out.innerHTML = ''; }
+  };
+
+  input.addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){
+      const val = input.value.trim();
+      if(val.length){
+        printLine('guest@loel:~$ ' + val, 'echo');
+        const cmd = commands[val.toLowerCase()];
+        if(cmd){ cmd(); }
+        else { printLine('command not found: ' + val + ' — try "help"', 'sys'); }
+      }
+      input.value = '';
+    }
+  });
+</script>
+
+</body>
+</html>
