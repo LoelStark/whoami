@@ -36,7 +36,6 @@
     overflow-x:hidden;
   }
 
-  /* ambient scanlines over whole page */
   body::before{
     content:"";
     position:fixed;
@@ -90,7 +89,7 @@
   .dots span:nth-child(3){background:#27c93f;}
   .titlebar .path{margin-left:auto;opacity:.7;}
 
-  /* ===== TICKER ===== */
+
   .ticker{
     background:var(--neon-magenta);
     color:#0a0118;
@@ -116,7 +115,7 @@
     100%{transform:translateX(-100%);}
   }
 
-  /* ===== HERO ===== */
+
   .hero{
     position:relative;
     padding:70px 24px 50px;
@@ -213,7 +212,7 @@
   .status .dot{width:8px;height:8px;border-radius:50%;background:var(--phosphor);box-shadow:0 0 8px var(--phosphor);animation:pulse 1.6s infinite;}
   @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
 
-  /* ===== SECTIONS ===== */
+
   section{
     padding:38px 26px;
     border-bottom:1px dashed var(--line);
@@ -275,7 +274,7 @@
     .fetch pre{display:none;}
   }
 
-  /* SKILLS as HUD bars */
+
   .skill-row{display:grid; grid-template-columns:180px 1fr; gap:14px; align-items:center; margin:10px 0; font-family:'Chakra Petch', sans-serif; font-size:14px;}
   .skill-row .label{color:var(--text-dim); letter-spacing:.04em;}
   .bar{height:10px; background:#0f0726; border:1px solid var(--line); border-radius:2px; overflow:hidden;}
@@ -333,7 +332,7 @@
     .meme-grid{grid-template-columns:1fr; }
   }
 
-  /* CLASSIFIED */
+  
   .classified{
     border:1px solid var(--neon-amber);
     background:rgba(255,182,39,0.05);
@@ -358,7 +357,7 @@
   .classified:hover .redacted, .classified:focus-within .redacted{filter:blur(0);}
   .classified .hint{font-family:'Chakra Petch',sans-serif; font-size:11px; color:var(--text-dim); margin-top:10px; letter-spacing:.04em;}
 
-  /* TABLE */
+  
   table{width:100%; border-collapse:collapse; margin-top:10px; font-family:'Space Mono',monospace; font-size:19px;}
   thead th{
     font-family:'Chakra Petch',sans-serif;
@@ -374,7 +373,7 @@
   tbody td{padding:8px 12px; border-bottom:1px solid var(--line);}
   tbody tr:nth-child(odd){background:rgba(255,255,255,0.02);}
 
-  /* PUNS & QUOTES */
+  
   .pun-grid{
     display:grid;
     grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
@@ -413,7 +412,7 @@
     letter-spacing:.05em;
   }
 
-  /* CONTACT */
+  
   .term-field{margin:14px 0;}
   .term-field label{
     display:block;
@@ -455,14 +454,14 @@
   .direct-line{margin-top:16px; font-size:16px;}
   .direct-line a{color:var(--neon-cyan);}
 
-  /* PLATFORMS as dir listing */
+  
   .dirlist{font-family:'Space Mono', monospace; font-size:18px;}
   .dirlist .row{display:grid; grid-template-columns:110px 1fr; gap:10px; padding:4px 0; border-bottom:1px dotted var(--line);}
   .dirlist .perm{color:var(--text-dim);}
   .dirlist a{color:var(--neon-amber); text-decoration:none;}
   .dirlist a:hover{text-decoration:underline; color:var(--neon-cyan);}
 
-  /* TERMINAL PROMPT (signature interactive element) */
+  
   .console{
     padding:26px;
     background:#0d0620;
@@ -539,19 +538,19 @@
     </div>
   </div>
 
-  <!-- HERO -->
+  
   <div class="hero">
     <div class="sun"></div>
     <div class="grid"></div>
     <div class="hero-content">
       <div class="dim" style="font-family:'Chakra Petch',sans-serif; font-size:13px; letter-spacing:.2em;">BOOT SEQUENCE COMPLETE</div>
       <h1 class="glitch">LOEL</h1>
-      <div class="subtitle">&gt; electrical_engineer // tutor // hacker // gamer_</div>
+      <div class="subtitle">&gt; electrical_engineering student // tutor // hacker // gamer_</div>
       <div class="status"><span class="dot"></span>SYSTEM ONLINE</div>
     </div>
   </div>
 
-  <!-- 01 ABOUT -->
+  
   <section id="about">
     <div class="sec-head">
       <span class="sec-num">01</span>
@@ -559,11 +558,11 @@
     </div>
     <p><span class="prompt">$</span> whoami</p>
     <p>
-      Hello, friend — I'm Loel, an Electrical Engineering student and tutor for Programming, Computer Applications, and Operating Systems.
+      Hello, friend I'm Loel, an Electrical Engineering student and a tutor.
     </p>
     <p>
-      I'm mostly an introvert who's fluent in code, cybersecurity, and gaming. I like breaking things apart to understand them —
-      circuits, systems, networks, plots — and I tutor because explaining something well is the fastest way to find out if you actually understand it.
+      I'm mostly an introvert who's fluent in code, cybersecurity, and gaming. I like breaking things apart to understand them which include 
+      circuits, systems, networks, plots and I tutor because explaining something well is the fastest way to find out if you actually understand it.
     </p>
     <p>When I'm off the clock, you'll find me:</p>
     <ul class="retro-list">
@@ -590,7 +589,7 @@
     </div>
   </section>
 
-  <!-- 02 SKILLS -->
+  
   <section id="skills">
     <div class="sec-head">
       <span class="sec-num">02</span>
@@ -611,17 +610,17 @@
     <p class="dim" style="margin-top:22px;">// tools I reach for most</p>
     <ul class="retro-list" style="columns:2;">
       <li>Python</li>
-      <li>C / C++</li>
-      <li>JavaScript</li>
-      <li>Linux</li>
+      <li>CSS / C++ / HTML</li>
+      <li>JavaScript / JAVA</li>
+      <li>Bash</li>
       <li>Wireshark</li>
-      <li>Burp Suite</li>
+      <li>Metasploit</li>
       <li>Git</li>
-      <li>Figma (grudgingly)</li>
+      <li>Canva (grudgingly)</li>
     </ul>
 
     <div class="quote-box">
-      <b style="color:#fff;">Unpopular opinion:</b> front-end and back-end have to work together for a project to breathe — but I still despise front-end.
+      <b style="color:#fff;">Unpopular opinion:</b> front-end and back-end have to work together for a project to breathe but I still despise front-end.
     </div>
 
     <div class="broken-cat">
@@ -646,7 +645,7 @@
       <pre class="ascii-cat"> /\_/\
 ( o.o )
  > ^ <</pre>
-      <small>backup cat.txt — for when the wifi (or my patience for front-end) goes down.</small>
+      <small>backup cat.txt for when the wifi (or my patience for front-end) goes down.</small>
     </div>
   </section>
 
@@ -659,16 +658,16 @@
     <div class="classified" tabindex="0">
       <span class="stamp">CLASSIFIED</span>
       <p class="redacted">
-        I normally keep this to myself — "keep it private until it's permanent" — but here's the honest version:
+        I normally keep this to myself because... "keep it private until it's permanent" but here's the a sneak peak:
         I'm working toward becoming a data engineer for a few major companies, with an honorable mention for <b>Google</b>.
-        My reasoning is simple — think about the sheer volume of data flowing through a company like that. Getting to work
-        across datasets at that scale is mind-blowing to me.
+        My reasoning is simple think about the sheer volume of data flowing through a company like that. Getting to work
+        across datasets at that scale is mind blowing to me so think about it..
       </p>
       <p class="hint">hover / tap to decrypt file</p>
     </div>
   </section>
 
-  <!-- 04 LIKES / DISLIKES -->
+
   <section id="likes">
     <div class="sec-head">
       <span class="sec-num">04</span>
@@ -679,19 +678,18 @@
         <tr><th>Likes.log</th><th>Dislikes.log</th></tr>
       </thead>
       <tbody>
-        <tr><td>Food</td><td>Strangers</td></tr>
+        <tr><td>Food</td><td>Gossip</td></tr>
         <tr><td>Basketball</td><td>Soccer</td></tr>
         <tr><td>Cats</td><td>Small talk</td></tr>
         <tr><td>Retro tech &amp; synthwave</td><td>Front-end debugging</td></tr>
         <tr><td>The Last of Us Part II</td><td>Spoilers</td></tr>
-        <tr><td>Late-night coding sessions</td><td>Slow wifi</td></tr>
+        <tr><td>Late night coding sessions</td><td>Slow wifi</td></tr>
         <tr><td>The command line</td><td>Overly-cluttered GUIs</td></tr>
         <tr><td>A good plot twist</td><td>Predictable endings</td></tr>
       </tbody>
     </table>
   </section>
 
-  <!-- 05 PUNS & QUOTES -->
   <section id="puns">
     <div class="sec-head">
       <span class="sec-num">05</span>
@@ -706,7 +704,7 @@
       <div class="pun-card">
         <span class="tag">quote</span>
         <p>There are only two hard things in computer science: cache invalidation, naming things, and off-by-one errors.</p>
-        <span class="by">— programmer folklore</span>
+        <span class="by"> programmer folklore</span>
       </div>
       <div class="pun-card">
         <span class="tag">pun</span>
@@ -736,13 +734,13 @@
     </div>
   </section>
 
-  <!-- 06 CONTACT -->
+
   <section id="contact">
     <div class="sec-head">
       <span class="sec-num">06</span>
       <span class="sec-title">Contact</span>
     </div>
-    <p class="dim">// fill in the fields below — a programmer's job is to make your life simpler (mine first, though).</p>
+    <p class="dim">// fill in the fields below a programmer's job is to make your life simpler (mine first, though).</p>
 
     <form id="contact-form">
       <div class="term-field">
@@ -756,11 +754,9 @@
       <button type="submit" class="send-btn">[ SEND_TRANSMISSION ]</button>
       <div class="send-note" id="send-note"></div>
     </form>
-
-    <p class="direct-line">Prefer the direct route? <a href="mailto:your-email@example.com">click here to email me</a></p>
   </section>
 
-  <!-- 07 PLATFORMS -->
+
   <section id="platforms">
     <div class="sec-head">
       <span class="sec-num">07</span>
@@ -768,11 +764,11 @@
     </div>
     <div class="dirlist">
       <div class="row"><span class="perm">drwxr-xr-x</span><a href="https://github.com/LoelStark" target="_blank" rel="noopener">github/LoelStark</a></div>
-      <div class="row"><span class="perm">drwxr-xr-x</span><a href="#" target="_blank" rel="noopener">linkedin/Doctor-Mkhonza</a></div>
+      <div class="row"><span class="perm">drwxr-xr-x</span><a href="#" target="_blank" rel="noopener">linkedIn/Doctor-Mkhonza</a></div>
     </div>
   </section>
 
-  <!-- INTERACTIVE TERMINAL -->
+  
   <div class="console">
     <div class="console-out" id="console-out">
       <div class="line sys">Type 'help' for a list of commands. Try 'cat' or 'joke' if you dare.</div>
@@ -789,7 +785,7 @@
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // fake contact form handling (static site, no backend)
+  // fake contact form handling (static site, no backend) I'll fix this later
   const form = document.getElementById('contact-form');
   const note = document.getElementById('send-note');
   form.addEventListener('submit', function(e){
@@ -797,7 +793,7 @@
     note.textContent = 'Transmission received. Standing by for a reply.';
   });
 
-  // interactive terminal easter egg
+
   const out = document.getElementById('console-out');
   const input = document.getElementById('console-in');
 
