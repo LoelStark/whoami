@@ -1,8 +1,1 @@
-# M.analysis
-
-This is a basic Malware analysis repo that I've been working on
-# strictly for educational purposes only
-
-Since I made this while learning, A few scripts will be unfinished due to futher research
-And all these were created while studying
-# Engineering is very time consuming
+# This repo contains more about me
