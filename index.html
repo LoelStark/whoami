@@ -3,848 +3,2870 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Loel // portfolio.sh</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Space+Mono:wght@400;700&family=Chakra+Petch:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-  :root{
-    --bg-void:#0a0118;
-    --bg-panel:#150a2e;
-    --bg-panel-2:#1c1040;
-    --neon-cyan:#00f0ff;
-    --neon-magenta:#ff2079;
-    --neon-amber:#ffb627;
-    --grid-purple:#6b2fb3;
-    --phosphor:#39ff88;
-    --text-dim:#9a8cc0;
-    --line:#3a2666;
+
+:root{
+  --bg-void:#0a0118;
+  --bg-panel:#150a2e;
+  --bg-panel-2:#1c1040;
+
+  --neon-cyan:#00f0ff;
+  --neon-magenta:#ff2079;
+  --neon-amber:#ffb627;
+
+  --grid-purple:#6b2fb3;
+  --phosphor:#39ff88;
+
+  --text-dim:#9a8cc0;
+  --line:#3a2666;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  background:var(--bg-void);
+  color:var(--phosphor);
+  font-family:'Space Mono', monospace;
+  font-size:18px;
+  line-height:1.5;
+  padding:28px 14px;
+  position:relative;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+
+  background:repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.035) 0px,
+    rgba(255,255,255,0.035) 1px,
+    transparent 2px,
+    transparent 3px
+  );
+
+  z-index:999;
+  mix-blend-mode:overlay;
+}
+
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+
+  background:radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgba(0,0,0,0.55) 100%
+  );
+
+  z-index:998;
+}
+
+.crt{
+  max-width:1000px;
+  margin:0 auto;
+
+  background:var(--bg-panel);
+
+  border:2px solid var(--line);
+  border-radius:10px;
+
+  box-shadow:
+    0 0 0 1px rgba(0,240,255,0.08),
+    0 0 40px rgba(107,47,179,0.5),
+    0 0 80px rgba(0,240,255,0.08);
+
+  overflow:hidden;
+}
+
+/* =========================
+   TITLE BAR
+========================= */
+
+.titlebar{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  padding:10px 16px;
+
+  background:var(--bg-panel-2);
+
+  border-bottom:1px solid var(--line);
+
+  font-family:'Chakra Petch', sans-serif;
+  font-size:13px;
+
+  letter-spacing:.04em;
+  color:var(--text-dim);
+}
+
+.dots{
+  display:flex;
+  gap:6px;
+}
+
+.dots span{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  display:inline-block;
+}
+
+.dots span:nth-child(1){
+  background:#ff5f56;
+}
+
+.dots span:nth-child(2){
+  background:#ffbd2e;
+}
+
+.dots span:nth-child(3){
+  background:#27c93f;
+}
+
+.titlebar .path{
+  margin-left:auto;
+  opacity:.7;
+}
+
+/* =========================
+   TICKER
+========================= */
+
+.ticker{
+  background:var(--neon-magenta);
+  color:#0a0118;
+
+  overflow:hidden;
+  white-space:nowrap;
+
+  border-bottom:1px solid var(--line);
+}
+
+.ticker-track{
+  display:inline-block;
+
+  padding-left:100%;
+
+  animation:scroll-left 32s linear infinite;
+
+  font-family:'Chakra Petch', sans-serif;
+  font-weight:600;
+  font-size:13px;
+
+  letter-spacing:.06em;
+  text-transform:uppercase;
+
+  padding-top:7px;
+  padding-bottom:7px;
+}
+
+.ticker-track span{
+  margin-right:36px;
+}
+
+@keyframes scroll-left{
+  0%{
+    transform:translateX(0);
   }
 
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-
-  body{
-    margin:0;
-    background:var(--bg-void);
-    color:var(--phosphor);
-    font-family:'Space Mono', monospace;
-    font-size:20px;
-    line-height:1.5;
-    padding:28px 14px;
-    position:relative;
-    overflow-x:hidden;
+  100%{
+    transform:translateX(-100%);
   }
+}
 
-  body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    background:repeating-linear-gradient(
-      to bottom,
-      rgba(255,255,255,0.035) 0px,
-      rgba(255,255,255,0.035) 1px,
-      transparent 2px,
-      transparent 3px
+/* =========================
+   HERO
+========================= */
+
+.hero{
+  position:relative;
+
+  padding:70px 24px 55px;
+
+  text-align:center;
+
+  overflow:hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      #150a2e 0%,
+      #1a0a3a 55%,
+      #150a2e 100%
     );
-    z-index:999;
-    mix-blend-mode:overlay;
-  }
-  body::after{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    background:radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.55) 100%);
-    z-index:998;
-  }
 
-  .crt{
-    max-width:900px;
-    margin:0 auto;
-    background:var(--bg-panel);
-    border:2px solid var(--line);
-    border-radius:10px;
-    box-shadow:0 0 0 1px rgba(0,240,255,0.08), 0 0 40px rgba(107,47,179,0.5), 0 0 80px rgba(0,240,255,0.08);
-    overflow:hidden;
-  }
+  border-bottom:1px solid var(--line);
+}
 
-  .titlebar{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:10px 16px;
-    background:var(--bg-panel-2);
-    border-bottom:1px solid var(--line);
-    font-family:'Chakra Petch', sans-serif;
-    font-size:13px;
-    letter-spacing:.04em;
-    color:var(--text-dim);
-  }
-  .dots{display:flex;gap:6px;}
-  .dots span{width:10px;height:10px;border-radius:50%;display:inline-block;}
-  .dots span:nth-child(1){background:#ff5f56;}
-  .dots span:nth-child(2){background:#ffbd2e;}
-  .dots span:nth-child(3){background:#27c93f;}
-  .titlebar .path{margin-left:auto;opacity:.7;}
+.sun{
+  position:absolute;
 
+  left:50%;
+  top:38px;
 
-  .ticker{
-    background:var(--neon-magenta);
-    color:#0a0118;
-    overflow:hidden;
-    white-space:nowrap;
-    border-bottom:1px solid var(--line);
-  }
-  .ticker-track{
-    display:inline-block;
-    padding-left:100%;
-    animation:scroll-left 32s linear infinite;
-    font-family:'Chakra Petch', sans-serif;
-    font-weight:600;
-    font-size:13px;
-    letter-spacing:.06em;
-    text-transform:uppercase;
-    padding-top:7px;
-    padding-bottom:7px;
-  }
-  .ticker-track span{margin-right:36px;}
-  @keyframes scroll-left{
-    0%{transform:translateX(0);}
-    100%{transform:translateX(-100%);}
-  }
+  width:150px;
+  height:150px;
 
+  transform:translateX(-50%);
 
-  .hero{
-    position:relative;
-    padding:70px 24px 50px;
-    text-align:center;
-    overflow:hidden;
-    background:linear-gradient(180deg, #150a2e 0%, #1a0a3a 55%, #150a2e 100%);
-    border-bottom:1px solid var(--line);
-  }
-  .sun{
-    position:absolute;
-    left:50%;
-    top:38px;
-    width:150px;
-    height:150px;
-    transform:translateX(-50%);
-    border-radius:50%;
-    background:linear-gradient(180deg, var(--neon-amber) 0%, var(--neon-magenta) 100%);
-    box-shadow:0 0 60px rgba(255,32,121,.55);
-    z-index:0;
-  }
-  .sun::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:repeating-linear-gradient(
+  border-radius:50%;
+
+  background:
+    linear-gradient(
+      180deg,
+      var(--neon-amber) 0%,
+      var(--neon-magenta) 100%
+    );
+
+  box-shadow:
+    0 0 60px rgba(255,32,121,.55);
+
+  z-index:0;
+}
+
+.sun::before{
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  background:
+    repeating-linear-gradient(
       to bottom,
       transparent 0 6px,
       var(--bg-panel) 6px 11px
     );
-    opacity:.85;
-  }
-  .grid{
-    position:absolute;
-    left:0; right:0; bottom:0;
-    height:130px;
-    background-image:
-      linear-gradient(var(--grid-purple) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-purple) 1px, transparent 1px);
-    background-size:36px 22px;
-    -webkit-mask-image:linear-gradient(to top, black, transparent);
-    mask-image:linear-gradient(to top, black, transparent);
-    transform:perspective(220px) rotateX(60deg);
-    transform-origin:bottom;
-    opacity:.65;
-    z-index:0;
-  }
-  .hero-content{position:relative;z-index:2;}
-  .glitch{
-    font-family:'Orbitron', sans-serif;
-    font-weight:800;
-    font-size:clamp(42px, 11vw, 78px);
-    margin:14px 0 6px;
-    color:#fff;
-    text-shadow:3px 0 var(--neon-cyan), -3px 0 var(--neon-magenta), 0 0 40px rgba(0,240,255,.35);
-    letter-spacing:4px;
-    animation:flicker 4.5s infinite;
-  }
-  @keyframes flicker{
-    0%,93%,100%{opacity:1;}
-    94%{opacity:.6;}
-    95%{opacity:1;}
-    96%{opacity:.75;}
-    97%{opacity:1;}
-  }
-  .subtitle{
-    font-family:'Chakra Petch', sans-serif;
-    color:var(--neon-cyan);
-    font-size:16px;
-    letter-spacing:.06em;
-    min-height:22px;
-    white-space:nowrap;
-    overflow:hidden;
-    border-right:2px solid var(--neon-cyan);
-    display:inline-block;
-    animation:typing 3s steps(46,end) 1 both, blink-caret .8s step-end infinite;
-  }
-  @keyframes typing{from{width:0;} to{width:46ch;}}
-  @keyframes blink-caret{50%{border-color:transparent;}}
 
-  .status{
-    margin-top:22px;
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    font-family:'Chakra Petch', sans-serif;
-    font-size:13px;
-    letter-spacing:.08em;
-    color:var(--phosphor);
-    border:1px solid var(--line);
-    padding:6px 14px;
-    border-radius:20px;
-    background:rgba(57,255,136,0.06);
-  }
-  .status .dot{width:8px;height:8px;border-radius:50%;background:var(--phosphor);box-shadow:0 0 8px var(--phosphor);animation:pulse 1.6s infinite;}
-  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+  opacity:.85;
+}
 
+.grid{
+  position:absolute;
 
-  section{
-    padding:38px 26px;
-    border-bottom:1px dashed var(--line);
-  }
-  section:last-of-type{border-bottom:none;}
+  left:0;
+  right:0;
+  bottom:0;
 
-  .sec-head{
-    display:flex;
-    align-items:baseline;
-    gap:12px;
-    margin-bottom:18px;
-    font-family:'Chakra Petch', sans-serif;
-  }
-  .sec-num{
-    color:var(--neon-magenta);
-    font-size:14px;
-    letter-spacing:.1em;
-    border:1px solid var(--neon-magenta);
-    padding:2px 8px;
-    border-radius:3px;
-  }
-  .sec-title{
-    color:#fff;
-    font-size:20px;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    font-weight:600;
-  }
-  .prompt{color:var(--neon-cyan);}
-  .dim{color:var(--text-dim);}
+  height:130px;
 
-  ul.retro-list{margin:10px 0; padding-left:0; list-style:none;}
-  ul.retro-list li{padding-left:22px; position:relative; margin:4px 0;}
-  ul.retro-list li::before{content:"›"; position:absolute; left:0; color:var(--neon-cyan);}
+  background-image:
+    linear-gradient(var(--grid-purple) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-purple) 1px, transparent 1px);
+
+  background-size:36px 22px;
+
+  -webkit-mask-image:
+    linear-gradient(to top, black, transparent);
+
+  mask-image:
+    linear-gradient(to top, black, transparent);
+
+  transform:
+    perspective(220px)
+    rotateX(60deg);
+
+  transform-origin:bottom;
+
+  opacity:.65;
+
+  z-index:0;
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+}
+
+.glitch{
+  font-family:'Orbitron', sans-serif;
+
+  font-weight:800;
+
+  font-size:
+    clamp(
+      42px,
+      11vw,
+      78px
+    );
+
+  margin:14px 0 6px;
+
+  color:#fff;
+
+  text-shadow:
+    3px 0 var(--neon-cyan),
+    -3px 0 var(--neon-magenta),
+    0 0 40px rgba(0,240,255,.35);
+
+  letter-spacing:4px;
+
+  animation:flicker 4.5s infinite;
+}
+
+@keyframes flicker{
+  0%,93%,100%{
+    opacity:1;
+  }
+
+  94%{
+    opacity:.6;
+  }
+
+  95%{
+    opacity:1;
+  }
+
+  96%{
+    opacity:.75;
+  }
+
+  97%{
+    opacity:1;
+  }
+}
+
+.subtitle{
+  font-family:'Chakra Petch', sans-serif;
+
+  color:var(--neon-cyan);
+
+  font-size:15px;
+
+  letter-spacing:.06em;
+
+  display:inline-block;
+
+  max-width:100%;
+}
+
+.status{
+  margin-top:22px;
+
+  display:inline-flex;
+
+  align-items:center;
+  gap:8px;
+
+  font-family:'Chakra Petch', sans-serif;
+
+  font-size:13px;
+
+  letter-spacing:.08em;
+
+  color:var(--phosphor);
+
+  border:1px solid var(--line);
+
+  padding:6px 14px;
+
+  border-radius:20px;
+
+  background:
+    rgba(57,255,136,0.06);
+}
+
+.status .dot{
+  width:8px;
+  height:8px;
+
+  border-radius:50%;
+
+  background:var(--phosphor);
+
+  box-shadow:
+    0 0 8px var(--phosphor);
+
+  animation:pulse 1.6s infinite;
+}
+
+@keyframes pulse{
+  0%,100%{
+    opacity:1;
+  }
+
+  50%{
+    opacity:.3;
+  }
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+section{
+  padding:40px 26px;
+
+  border-bottom:1px dashed var(--line);
+}
+
+section:last-of-type{
+  border-bottom:none;
+}
+
+.sec-head{
+  display:flex;
+
+  align-items:baseline;
+
+  gap:12px;
+
+  margin-bottom:20px;
+
+  font-family:'Chakra Petch', sans-serif;
+}
+
+.sec-num{
+  color:var(--neon-magenta);
+
+  font-size:14px;
+
+  letter-spacing:.1em;
+
+  border:1px solid var(--neon-magenta);
+
+  padding:2px 8px;
+
+  border-radius:3px;
+}
+
+.sec-title{
+  color:#fff;
+
+  font-size:20px;
+
+  letter-spacing:.08em;
+
+  text-transform:uppercase;
+
+  font-weight:600;
+}
+
+.prompt{
+  color:var(--neon-cyan);
+}
+
+.dim{
+  color:var(--text-dim);
+}
+
+.highlight{
+  color:var(--neon-cyan);
+}
+
+strong{
+  color:#fff;
+}
+
+ul.retro-list{
+  margin:10px 0;
+
+  padding-left:0;
+
+  list-style:none;
+}
+
+ul.retro-list li{
+  padding-left:22px;
+
+  position:relative;
+
+  margin:5px 0;
+}
+
+ul.retro-list li::before{
+  content:"›";
+
+  position:absolute;
+
+  left:0;
+
+  color:var(--neon-cyan);
+}
+
+/* =========================
+   SYSTEM INFO
+========================= */
+
+.fetch{
+  margin-top:24px;
+
+  display:grid;
+
+  grid-template-columns:auto 1fr;
+
+  gap:0 24px;
+
+  border:1px solid var(--line);
+
+  background:#0f0726;
+
+  padding:18px;
+
+  border-radius:6px;
+
+  font-size:15px;
+}
+
+.fetch pre{
+  grid-row:1 / -1;
+
+  color:var(--neon-cyan);
+
+  font-size:13px;
+
+  line-height:1.15;
+
+  margin:0;
+}
+
+.fetch dl{
+  margin:0;
+
+  display:contents;
+}
+
+.fetch dt{
+  color:var(--neon-magenta);
+
+  font-family:'Chakra Petch',sans-serif;
+
+  font-size:12px;
+
+  letter-spacing:.04em;
+
+  grid-column:2;
+
+  margin-top:6px;
+}
+
+.fetch dd{
+  margin:0 0 2px;
+
+  grid-column:2;
+}
+
+@media(max-width:560px){
 
   .fetch{
-    margin-top:20px;
-    display:grid;
-    grid-template-columns:auto 1fr;
-    gap:0 24px;
-    border:1px solid var(--line);
-    background:#0f0726;
-    padding:16px 18px;
-    border-radius:6px;
+    grid-template-columns:1fr;
+  }
+
+  .fetch pre{
+    display:none;
+  }
+}
+
+/* =========================
+   EXPERIENCE
+========================= */
+
+.experience-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(260px,1fr)
+    );
+
+  gap:14px;
+
+  margin-top:20px;
+}
+
+.experience-card{
+  background:#0f0726;
+
+  border:1px solid var(--line);
+
+  border-radius:7px;
+
+  padding:18px;
+
+  transition:
+    transform .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease;
+}
+
+.experience-card:hover{
+  transform:translateY(-4px);
+
+  border-color:var(--neon-cyan);
+
+  box-shadow:
+    0 8px 24px rgba(0,240,255,.15);
+}
+
+.experience-card .role{
+  color:var(--neon-cyan);
+
+  font-family:'Chakra Petch',sans-serif;
+
+  font-weight:700;
+
+  font-size:16px;
+
+  margin-bottom:5px;
+}
+
+.experience-card .org{
+  color:var(--neon-magenta);
+
+  font-family:'Chakra Petch',sans-serif;
+
+  font-size:12px;
+
+  text-transform:uppercase;
+
+  letter-spacing:.05em;
+
+  margin-bottom:12px;
+}
+
+.experience-card p{
+  margin:0;
+
+  font-size:15px;
+
+  color:#fff;
+}
+
+/* =========================
+   SKILLS
+========================= */
+
+.skill-group{
+  margin-top:24px;
+}
+
+.skill-group-title{
+  color:var(--neon-magenta);
+
+  font-family:'Chakra Petch',sans-serif;
+
+  font-size:13px;
+
+  letter-spacing:.08em;
+
+  margin-bottom:10px;
+
+  text-transform:uppercase;
+}
+
+.skill-tags{
+  display:flex;
+
+  flex-wrap:wrap;
+
+  gap:8px;
+}
+
+.skill-tag{
+  border:1px solid var(--line);
+
+  background:#0f0726;
+
+  padding:7px 10px;
+
+  color:#fff;
+
+  font-family:'Chakra Petch',sans-serif;
+
+  font-size:13px;
+
+  transition:.2s;
+}
+
+.skill-tag:hover{
+  border-color:var(--neon-cyan);
+
+  color:var(--neon-cyan);
+}
+
+/* =========================
+   PROJECTS
+========================= */
+
+.projects-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(280px,1fr)
+    );
+
+  gap:16px;
+
+  margin-top:20px;
+}
+
+.project-card{
+  position:relative;
+
+  background:#0f0726;
+
+  border:1px solid var(--line);
+
+  border-radius:8px;
+
+  padding:20px;
+
+  transition:
+    transform .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease;
+}
+
+.project-card:hover{
+  transform:translateY(-5px);
+
+  border-color:var(--neon-cyan);
+
+  box-shadow:
+    0 10px 30px rgba(0,240,255,.16);
+}
+
+.project-number{
+  position:absolute;
+
+  top:12px;
+  right:14px;
+
+  color:var(--text-dim);
+
+  font-family:'Orbitron',sans-serif;
+
+  font-size:11px;
+}
+
+.project-card h3{
+  margin:0 0 8px;
+
+  color:#fff;
+
+  font-family:'Chakra Petch',sans-serif;
+
+  font-size:18px;
+}
+
+.project-type{
+  display:inline-block;
+
+  color:var(--neon-amber);
+
+  font-family:'Chakra Petch',sans-serif;
+
+  font-size:10px;
+
+  text-transform:uppercase;
+
+  letter-spacing:.1em;
+
+  margin-bottom:12px;
+}
+
+.project-card p{
+  color:#d6ccea;
+
+  font-size:14px;
+
+  line-height:1.6;
+
+  margin:0 0 14px;
+}
+
+.project-tech{
+  color:var(--neon-cyan);
+
+  font-size:12px;
+
+  line-height:1.7;
+}
+
+.project-tech span{
+  color:var(--text-dim);
+}
+
+/* =========================
+   CAREER DIRECTION
+========================= */
+
+.classified{
+  border:1px solid var(--neon-amber);
+
+  background:
+    rgba(255,182,39,0.05);
+
+  padding:18px;
+
+  position:relative;
+}
+
+.classified .stamp{
+  font-family:'Orbitron', sans-serif;
+
+  font-size:11px;
+
+  color:var(--neon-amber);
+
+  border:2px solid var(--neon-amber);
+
+  display:inline-block;
+
+  padding:6px 10px;
+
+  transform:rotate(-3deg);
+
+  margin-bottom:12px;
+}
+
+.career-list{
+  margin:14px 0;
+
+  padding-left:20px;
+
+  color:#fff;
+}
+
+.career-list li{
+  margin:7px 0;
+}
+
+.classified .hint{
+  font-family:'Chakra Petch',sans-serif;
+
+  font-size:11px;
+
+  color:var(--text-dim);
+
+  margin-top:12px;
+
+  letter-spacing:.04em;
+}
+
+/* =========================
+   ACHIEVEMENTS
+========================= */
+
+.achievement-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(230px,1fr)
+    );
+
+  gap:14px;
+
+  margin-top:20px;
+}
+
+.achievement{
+  border:1px solid var(--line);
+
+  background:#0f0726;
+
+  padding:16px;
+
+  border-left:3px solid var(--neon-cyan);
+}
+
+.achievement h3{
+  color:#fff;
+
+  font-family:'Chakra Petch',sans-serif;
+
+  font-size:15px;
+
+  margin:0 0 6px;
+}
+
+.achievement p{
+  margin:0;
+
+  color:var(--text-dim);
+
+  font-size:13px;
+}
+
+/* =========================
+   LIKES
+========================= */
+
+table{
+  width:100%;
+
+  border-collapse:collapse;
+
+  margin-top:10px;
+
+  font-family:'Space Mono',monospace;
+
+  font-size:15px;
+}
+
+thead th{
+  font-family:'Chakra Petch',sans-serif;
+
+  font-size:12px;
+
+  letter-spacing:.08em;
+
+  text-transform:uppercase;
+
+  color:var(--bg-void);
+
+  background:var(--neon-cyan);
+
+  padding:8px 12px;
+
+  text-align:left;
+}
+
+thead th:last-child{
+  background:var(--neon-magenta);
+}
+
+tbody td{
+  padding:8px 12px;
+
+  border-bottom:1px solid var(--line);
+}
+
+tbody tr:nth-child(odd){
+  background:rgba(255,255,255,0.02);
+}
+
+/* =========================
+   QUOTES
+========================= */
+
+.pun-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(220px,1fr)
+    );
+
+  gap:14px;
+
+  margin-top:14px;
+}
+
+.pun-card{
+  background:#0f0726;
+
+  border:1px solid var(--line);
+
+  border-radius:8px;
+
+  padding:16px;
+
+  position:relative;
+
+  transition:
+    transform .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease;
+}
+
+.pun-card:hover{
+  transform:
+    translateY(-4px)
+    rotate(-0.6deg);
+
+  border-color:var(--neon-cyan);
+
+  box-shadow:
+    0 8px 24px rgba(0,240,255,.18);
+}
+
+.pun-card .tag{
+  font-family:'Chakra Petch',sans-serif;
+
+  font-size:10px;
+
+  letter-spacing:.1em;
+
+  color:var(--neon-amber);
+
+  text-transform:uppercase;
+
+  margin-bottom:8px;
+
+  display:inline-block;
+}
+
+.pun-card p{
+  margin:0;
+
+  font-size:15px;
+
+  line-height:1.5;
+}
+
+.pun-card .by{
+  display:block;
+
+  margin-top:10px;
+
+  font-family:'Chakra Petch',sans-serif;
+
+  font-size:11px;
+
+  color:var(--text-dim);
+
+  letter-spacing:.05em;
+}
+
+/* =========================
+   CONTACT
+========================= */
+
+.term-field{
+  margin:14px 0;
+}
+
+.term-field label{
+  display:block;
+
+  color:var(--neon-cyan);
+
+  font-family:'Chakra Petch',sans-serif;
+
+  font-size:13px;
+
+  letter-spacing:.06em;
+
+  margin-bottom:6px;
+}
+
+.term-field label::before{
+  content:"> ";
+}
+
+.term-field input,
+.term-field textarea{
+  width:100%;
+
+  background:#0f0726;
+
+  border:1px solid var(--line);
+
+  color:var(--phosphor);
+
+  font-family:'Space Mono',monospace;
+
+  font-size:15px;
+
+  padding:10px 12px;
+
+  border-radius:3px;
+
+  outline:none;
+}
+
+.term-field textarea{
+  min-height:120px;
+
+  resize:vertical;
+}
+
+.term-field input:focus,
+.term-field textarea:focus{
+  border-color:var(--neon-cyan);
+
+  box-shadow:
+    0 0 0 1px var(--neon-cyan) inset;
+}
+
+.send-btn{
+  margin-top:6px;
+
+  font-family:'Chakra Petch',sans-serif;
+
+  letter-spacing:.08em;
+
+  font-size:13px;
+
+  background:transparent;
+
+  color:var(--neon-magenta);
+
+  border:1px solid var(--neon-magenta);
+
+  padding:10px 18px;
+
+  border-radius:3px;
+
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+.send-btn:hover{
+  background:var(--neon-magenta);
+
+  color:var(--bg-void);
+
+  box-shadow:
+    0 0 20px rgba(255,32,121,.6);
+}
+
+.send-note{
+  margin-top:10px;
+
+  font-size:14px;
+
+  color:var(--text-dim);
+
+  min-height:20px;
+}
+
+/* =========================
+   PLATFORMS
+========================= */
+
+.dirlist{
+  font-family:'Space Mono', monospace;
+
+  font-size:15px;
+}
+
+.dirlist .row{
+  display:grid;
+
+  grid-template-columns:110px 1fr;
+
+  gap:10px;
+
+  padding:7px 0;
+
+  border-bottom:1px dotted var(--line);
+}
+
+.dirlist .perm{
+  color:var(--text-dim);
+}
+
+.dirlist a{
+  color:var(--neon-amber);
+
+  text-decoration:none;
+}
+
+.dirlist a:hover{
+  text-decoration:underline;
+
+  color:var(--neon-cyan);
+}
+
+/* =========================
+   CONSOLE
+========================= */
+
+.console{
+  padding:26px;
+
+  background:#0d0620;
+}
+
+.console-out{
+  min-height:120px;
+
+  max-height:220px;
+
+  overflow-y:auto;
+
+  font-size:15px;
+
+  margin-bottom:10px;
+
+  white-space:pre-wrap;
+}
+
+.console-out .line{
+  margin:2px 0;
+}
+
+.console-out .sys{
+  color:var(--text-dim);
+}
+
+.console-out .echo{
+  color:#fff;
+}
+
+.console-line{
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+}
+
+.console-line .p{
+  color:var(--neon-cyan);
+
+  font-size:17px;
+}
+
+.console-line input{
+  flex:1;
+
+  background:transparent;
+
+  border:none;
+
+  outline:none;
+
+  color:var(--phosphor);
+
+  font-family:'Space Mono',monospace;
+
+  font-size:17px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+  text-align:center;
+
+  padding:16px;
+
+  font-family:'Chakra Petch',sans-serif;
+
+  font-size:11px;
+
+  letter-spacing:.08em;
+
+  color:var(--text-dim);
+}
+
+a{
+  color:var(--neon-cyan);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:560px){
+
+  body{
     font-size:16px;
   }
-  .fetch pre{
-    grid-row:1 / -1;
-    color:var(--neon-cyan);
+
+  section{
+    padding:32px 18px;
+  }
+
+  .subtitle{
+    white-space:normal;
+  }
+
+  .dirlist .row{
+    grid-template-columns:90px 1fr;
+  }
+
+  table{
     font-size:13px;
-    line-height:1.15;
-    margin:0;
-  }
-  .fetch dl{margin:0; display:contents;}
-  .fetch dt{color:var(--neon-magenta); font-family:'Chakra Petch',sans-serif; font-size:13px; letter-spacing:.04em; grid-column:2; margin-top:6px;}
-  .fetch dd{margin:0 0 2px; grid-column:2;}
-  @media (max-width:560px){
-    .fetch{grid-template-columns:1fr;}
-    .fetch pre{display:none;}
   }
 
+}
 
-  .skill-row{display:grid; grid-template-columns:180px 1fr; gap:14px; align-items:center; margin:10px 0; font-family:'Chakra Petch', sans-serif; font-size:14px;}
-  .skill-row .label{color:var(--text-dim); letter-spacing:.04em;}
-  .bar{height:10px; background:#0f0726; border:1px solid var(--line); border-radius:2px; overflow:hidden;}
-  .bar span{display:block; height:100%; background:linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta)); box-shadow:0 0 8px rgba(0,240,255,.6);}
+@media(prefers-reduced-motion:reduce){
 
-  .quote-box{
-    margin-top:22px;
-    border:1px solid var(--line);
-    background:rgba(255,32,121,0.05);
-    padding:14px 16px;
-    border-left:3px solid var(--neon-magenta);
+  *{
+    animation-duration:0.001ms !important;
+
+    animation-iteration-count:1 !important;
+
+    transition-duration:0.001ms !important;
   }
 
-  .broken-cat{margin-top:16px;}
-  .broken-cat > .caption{font-family:'Chakra Petch',sans-serif; font-size:12px; color:var(--neon-cyan); letter-spacing:.04em; margin-bottom:10px; text-align:center;}
-  .meme-grid{
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:12px;
-  }
-  .meme{
-    position:relative;
-    border:2px solid var(--line);
-    border-radius:6px;
-    overflow:hidden;
-    aspect-ratio:1/1;
-    background:#000;
-  }
-  .meme img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-    transition:transform .3s ease;
-  }
-  .meme:hover img{transform:scale(1.06);}
-  .meme .cap{
-    position:absolute;
-    left:0; right:0;
-    font-family:'Chakra Petch', sans-serif;
-    font-weight:700;
-    text-transform:uppercase;
-    color:#fff;
-    text-align:center;
-    font-size:12px;
-    line-height:1.25;
-    text-shadow:2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
-    padding:0 6px;
-  }
-  .meme .cap.top{top:8px;}
-  .meme .cap.bottom{bottom:8px;}
-  .ascii-cat{white-space:pre; line-height:1.05; font-size:13px; color:var(--phosphor); margin:14px 0 0; text-align:center;}
-  .broken-cat small{display:block; margin-top:8px; color:var(--text-dim); font-family:'Chakra Petch',sans-serif; font-size:11px; letter-spacing:.04em; text-align:center;}
-  @media (max-width:560px){
-    .meme-grid{grid-template-columns:1fr; }
-  }
+}
 
-  
-  .classified{
-    border:1px solid var(--neon-amber);
-    background:rgba(255,182,39,0.05);
-    padding:16px;
-    position:relative;
-  }
-  .classified .stamp{
-    font-family:'Orbitron', sans-serif;
-    font-size:11px;
-    color:var(--neon-amber);
-    border:2px solid var(--neon-amber);
-    display:inline-block;
-    padding:6px 10px;
-    transform:rotate(-3deg);
-    margin-bottom:12px;
-  }
-  .redacted{
-    filter:blur(5px);
-    transition:filter .4s ease;
-    cursor:pointer;
-  }
-  .classified:hover .redacted, .classified:focus-within .redacted{filter:blur(0);}
-  .classified .hint{font-family:'Chakra Petch',sans-serif; font-size:11px; color:var(--text-dim); margin-top:10px; letter-spacing:.04em;}
-
-  
-  table{width:100%; border-collapse:collapse; margin-top:10px; font-family:'Space Mono',monospace; font-size:19px;}
-  thead th{
-    font-family:'Chakra Petch',sans-serif;
-    font-size:13px;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    color:var(--bg-void);
-    background:var(--neon-cyan);
-    padding:8px 12px;
-    text-align:left;
-  }
-  thead th:last-child{background:var(--neon-magenta);}
-  tbody td{padding:8px 12px; border-bottom:1px solid var(--line);}
-  tbody tr:nth-child(odd){background:rgba(255,255,255,0.02);}
-
-  
-  .pun-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
-    gap:14px;
-    margin-top:14px;
-  }
-  .pun-card{
-    background:#0f0726;
-    border:1px solid var(--line);
-    border-radius:8px;
-    padding:16px;
-    position:relative;
-    transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;
-  }
-  .pun-card:hover{
-    transform:translateY(-4px) rotate(-0.6deg);
-    border-color:var(--neon-cyan);
-    box-shadow:0 8px 24px rgba(0,240,255,.18);
-  }
-  .pun-card .tag{
-    font-family:'Chakra Petch', sans-serif;
-    font-size:10px;
-    letter-spacing:.1em;
-    color:var(--neon-amber);
-    text-transform:uppercase;
-    margin-bottom:8px;
-    display:inline-block;
-  }
-  .pun-card p{margin:0; font-size:18px; line-height:1.4;}
-  .pun-card .by{
-    display:block;
-    margin-top:10px;
-    font-family:'Chakra Petch', sans-serif;
-    font-size:11px;
-    color:var(--text-dim);
-    letter-spacing:.05em;
-  }
-
-  
-  .term-field{margin:14px 0;}
-  .term-field label{
-    display:block;
-    color:var(--neon-cyan);
-    font-family:'Chakra Petch',sans-serif;
-    font-size:13px;
-    letter-spacing:.06em;
-    margin-bottom:6px;
-  }
-  .term-field label::before{content:"> ";}
-  .term-field input{
-    width:100%;
-    background:#0f0726;
-    border:1px solid var(--line);
-    color:var(--phosphor);
-    font-family:'Space Mono',monospace;
-    font-size:19px;
-    padding:10px 12px;
-    border-radius:3px;
-    outline:none;
-  }
-  .term-field input:focus{border-color:var(--neon-cyan); box-shadow:0 0 0 1px var(--neon-cyan) inset;}
-
-  .send-btn{
-    margin-top:6px;
-    font-family:'Chakra Petch',sans-serif;
-    letter-spacing:.08em;
-    font-size:13px;
-    background:transparent;
-    color:var(--neon-magenta);
-    border:1px solid var(--neon-magenta);
-    padding:10px 18px;
-    border-radius:3px;
-    cursor:pointer;
-    transition:.2s;
-  }
-  .send-btn:hover{background:var(--neon-magenta); color:var(--bg-void); box-shadow:0 0 20px rgba(255,32,121,.6);}
-  .send-note{margin-top:10px; font-size:14px; color:var(--text-dim); min-height:20px;}
-  .direct-line{margin-top:16px; font-size:16px;}
-  .direct-line a{color:var(--neon-cyan);}
-
-  
-  .dirlist{font-family:'Space Mono', monospace; font-size:18px;}
-  .dirlist .row{display:grid; grid-template-columns:110px 1fr; gap:10px; padding:4px 0; border-bottom:1px dotted var(--line);}
-  .dirlist .perm{color:var(--text-dim);}
-  .dirlist a{color:var(--neon-amber); text-decoration:none;}
-  .dirlist a:hover{text-decoration:underline; color:var(--neon-cyan);}
-
-  
-  .console{
-    padding:26px;
-    background:#0d0620;
-  }
-  .console-out{
-    min-height:120px;
-    max-height:220px;
-    overflow-y:auto;
-    font-size:17px;
-    margin-bottom:10px;
-    white-space:pre-wrap;
-  }
-  .console-out .line{margin:2px 0;}
-  .console-out .sys{color:var(--text-dim);}
-  .console-out .echo{color:#fff;}
-  .console-line{display:flex; align-items:center; gap:8px;}
-  .console-line .p{color:var(--neon-cyan); font-size:19px;}
-  .console-line input{
-    flex:1;
-    background:transparent;
-    border:none;
-    outline:none;
-    color:var(--phosphor);
-    font-family:'Space Mono',monospace;
-    font-size:19px;
-  }
-
-  footer{
-    text-align:center;
-    padding:16px;
-    font-family:'Chakra Petch',sans-serif;
-    font-size:11px;
-    letter-spacing:.08em;
-    color:var(--text-dim);
-  }
-
-  a{color:var(--neon-cyan);}
-
-  @media (max-width:560px){
-    body{font-size:18px;}
-    .skill-row{grid-template-columns:1fr; gap:4px;}
-    .dirlist .row{grid-template-columns:90px 1fr;}
-    .subtitle{white-space:normal; border-right:none; animation:none; width:auto;}
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
-  }
 </style>
 </head>
+
 <body>
 
 <div class="crt">
 
+  <!-- =========================
+       TITLE BAR
+  ========================== -->
+
   <div class="titlebar">
-    <div class="dots"><span></span><span></span><span></span></div>
+
+    <div class="dots">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
     <span>loel@root: ~</span>
-    <span class="path">./portfolio.sh</span>
+
+    <span class="path">
+      ./portfolio.sh
+    </span>
+
   </div>
 
-  <!-- TICKER -->
+
+  <!-- =========================
+       TICKER
+  ========================== -->
+
   <div class="ticker">
+
     <div class="ticker-track">
+
+      <span>SECURITY ENGINEER IN PROGRESS</span>
+
+      <span>JARVIS IS ONLINE</span>
+
       <span>404: SOCIAL LIFE NOT FOUND</span>
-      <span>CTRL+Z WORKS ON CODE, NOT ON LIFE CHOICES</span>
-      <span>WARNING: MAY START TALKING ABOUT THE LAST OF US 2 UNPROMPTED</span>
-      <span>THERE ARE 10 TYPES OF PEOPLE: THOSE WHO GET BINARY AND THOSE WHO DON'T</span>
-      <span>CATS.EXE IS ALWAYS RUNNING IN THE BACKGROUND</span>
+
+      <span>NETWORKS ARE JUST COMPUTERS TALKING ABOUT THEIR FEELINGS</span>
+
+      <span>FRONT-END DEBUGGING REMAINS A THREAT</span>
+
+      <span>CCEP: COMPLETED</span>
+
+      <span>SECURITY ENGINEER IN PROGRESS</span>
+
+      <span>JARVIS IS ONLINE</span>
+
       <span>404: SOCIAL LIFE NOT FOUND</span>
-      <span>CTRL+Z WORKS ON CODE, NOT ON LIFE CHOICES</span>
-      <span>WARNING: MAY START TALKING ABOUT THE LAST OF US 2 UNPROMPTED</span>
-      <span>THERE ARE 10 TYPES OF PEOPLE: THOSE WHO GET BINARY AND THOSE WHO DON'T</span>
-      <span>CATS.EXE IS ALWAYS RUNNING IN THE BACKGROUND</span>
+
     </div>
+
   </div>
 
-  
+
+  <!-- =========================
+       HERO
+  ========================== -->
+
   <div class="hero">
+
     <div class="sun"></div>
+
     <div class="grid"></div>
+
     <div class="hero-content">
-      <div class="dim" style="font-family:'Chakra Petch',sans-serif; font-size:13px; letter-spacing:.2em;">BOOT SEQUENCE COMPLETE</div>
-      <h1 class="glitch">LOEL</h1>
-      <div class="subtitle">&gt; electrical_engineering student // tutor // hacker // gamer_</div>
-      <div class="status"><span class="dot"></span>SYSTEM ONLINE</div>
+
+      <div
+        class="dim"
+        style="
+          font-family:'Chakra Petch',sans-serif;
+          font-size:13px;
+          letter-spacing:.2em;
+        "
+      >
+        BOOT SEQUENCE COMPLETE
+      </div>
+
+      <h1 class="glitch">
+        LOEL
+      </h1>
+
+      <div class="subtitle">
+        &gt; computer_systems_engineer // security_engineer_in_training // builder_
+      </div>
+
+      <div class="status">
+        <span class="dot"></span>
+        SYSTEM ONLINE
+      </div>
+
     </div>
+
   </div>
 
-  
+
+  <!-- =========================
+       ABOUT
+  ========================== -->
+
   <section id="about">
+
     <div class="sec-head">
-      <span class="sec-num">01</span>
-      <span class="sec-title">About_Me</span>
+
+      <span class="sec-num">
+        01
+      </span>
+
+      <span class="sec-title">
+        About_Me
+      </span>
+
     </div>
-    <p><span class="prompt">$</span> whoami</p>
+
     <p>
-      Hello, friend I'm Loel, an Electrical Engineering student and a tutor.
+      <span class="prompt">$</span>
+      whoami
     </p>
+
     <p>
-      I'm mostly an introvert who's fluent in code, cybersecurity, and gaming. I like breaking things apart to understand them which include 
-      circuits, systems, networks, plots and I tutor because explaining something well is the fastest way to find out if you actually understand it.
+      I'm <strong>Loel</strong>, a third-year
+      <span class="highlight">
+        Diploma in Electrical Engineering (Computer Systems)
+      </span>
+      student at Vaal University of Technology.
     </p>
-    <p>When I'm off the clock, you'll find me:</p>
-    <ul class="retro-list">
-      <li>Running</li>
-      <li>Skating</li>
-      <li>Writing fiction</li>
-    </ul>
-    <p class="dim">// there's more, but that's the highlight reel for now.</p>
+
+    <p>
+      My interests sit at the intersection of
+      <strong>cybersecurity, networking, software engineering and
+      computer systems</strong>.
+      I'm particularly interested in understanding how systems work,
+      how they fail, and how they can be secured.
+    </p>
+
+    <p>
+      My current career direction is
+      <span class="highlight">Security Engineering</span>.
+      I'm building toward that path through cybersecurity training,
+      networking, software projects, practical labs and systems work.
+    </p>
+
+    <p>
+      I've also spent roughly three years tutoring and mentoring students
+      in programming, software engineering, cybersecurity and operating
+      systems.
+      Teaching has become another way of testing whether I actually
+      understand something.
+    </p>
 
     <div class="fetch">
-      <pre>   /\_/\
+
+<pre>
+   /\_/\
   ( o.o )
-   > ^ &lt;</pre>
+   > ^ <
+</pre>
+
       <dl>
-        <dt>OS</dt><dd>LoelOS (Cat Edition)</dd>
-        <dt>Host</dt><dd>Electrical Engineering, in progress</dd>
-        <dt>Shell</dt><dd>bash + a healthy amount of sarcasm</dd>
-        <dt>Uptime</dt><dd>currently debugging something</dd>
-        <dt>Currently_Playing</dt><dd>The Last of Us Part II (again)</dd>
-        <dt>Currently_Learning</dt><dd>whatever breaks next</dd>
-        <dt>CPU</dt><dd>caffeine-powered</dd>
-        <dt>Known_Bug</dt><dd>despises front-end, does it anyway</dd>
+
+        <dt>ROLE</dt>
+        <dd>
+          Engineering Student // Security Engineer in progress
+        </dd>
+
+        <dt>EDUCATION</dt>
+        <dd>
+          Diploma in Electrical Engineering (Computer Systems)
+        </dd>
+
+        <dt>INSTITUTION</dt>
+        <dd>
+          Vaal University of Technology
+        </dd>
+
+        <dt>CERTIFICATION</dt>
+        <dd>
+          Cisco Certified Ethical Hacker (CCEP)
+        </dd>
+
+        <dt>AMBASSADOR</dt>
+        <dd>
+          Huawei ICT Academy Ambassador
+        </dd>
+
+        <dt>LEADERSHIP</dt>
+        <dd>
+          Chairperson // Electrical Engineering Society
+        </dd>
+
+        <dt>SHELL</dt>
+        <dd>
+          Bash + Python + a healthy amount of curiosity
+        </dd>
+
+        <dt>CURRENT_PROJECT</dt>
+        <dd>
+          JARVIS // local AI assistant
+        </dd>
+
+        <dt>KNOWN_BUG</dt>
+        <dd>
+          prefers backend systems over frontend styling
+        </dd>
+
       </dl>
+
     </div>
+
   </section>
 
-  
-  <section id="skills">
+
+  <!-- =========================
+       EXPERIENCE
+  ========================== -->
+
+  <section id="experience">
+
     <div class="sec-head">
-      <span class="sec-num">02</span>
-      <span class="sec-title">Skills.dat</span>
+
+      <span class="sec-num">
+        02
+      </span>
+
+      <span class="sec-title">
+        Experience.log
+      </span>
+
     </div>
-    <p class="dim">// character sheet — stats pulled from years in the field, not just the tech tree.</p>
 
-    <div class="skill-row"><span class="label">PHOTOGRAPHY</span><div class="bar"><span style="width:70%"></span></div></div>
-    <div class="skill-row"><span class="label">GAMING</span><div class="bar"><span style="width:95%"></span></div></div>
-    <div class="skill-row"><span class="label">FULL-STACK DEV</span><div class="bar"><span style="width:80%"></span></div></div>
-    <div class="skill-row"><span class="label">ETHICAL HACKING</span><div class="bar"><span style="width:85%"></span></div></div>
-    <div class="skill-row"><span class="label">NETWORKS</span><div class="bar"><span style="width:82%"></span></div></div>
-    <div class="skill-row"><span class="label">SOCIAL ENGINEERING</span><div class="bar"><span style="width:88%"></span></div></div>
-    <div class="skill-row"><span class="label">CIRCUITS &amp; ELECTRICAL ENG</span><div class="bar"><span style="width:78%"></span></div></div>
+    <p class="dim">
+      // selected roles, leadership and technical involvement
+    </p>
 
-    <p style="margin-top:18px;" class="dim">...and quite a lot more.</p>
+    <div class="experience-grid">
 
-    <p class="dim" style="margin-top:22px;">// tools I reach for most</p>
-    <ul class="retro-list" style="columns:2;">
-      <li>Python</li>
-      <li>CSS / C++ / HTML</li>
-      <li>JavaScript / JAVA</li>
-      <li>Bash</li>
-      <li>Wireshark</li>
-      <li>Metasploit</li>
-      <li>Git</li>
-      <li>Canva (grudgingly)</li>
-    </ul>
+      <div class="experience-card">
+
+        <div class="role">
+          Huawei ICT Academy Ambassador
+        </div>
+
+        <div class="org">
+          Vaal University of Technology
+        </div>
+
+        <p>
+          Supporting Huawei ICT Academy activities, student engagement,
+          technical initiatives and cybersecurity learning opportunities
+          within the university environment.
+        </p>
+
+      </div>
+
+
+      <div class="experience-card">
+
+        <div class="role">
+          Chairperson
+        </div>
+
+        <div class="org">
+          Electrical Engineering Society // VUT
+        </div>
+
+        <p>
+          Contributing to technical events, student development,
+          engineering activities, hackathons and industry-facing
+          initiatives.
+        </p>
+
+      </div>
+
+
+      <div class="experience-card">
+
+        <div class="role">
+          Tutor & Mentor
+        </div>
+
+        <div class="org">
+          Programming // Software Engineering // Cybersecurity
+        </div>
+
+        <p>
+          Approximately three years of tutoring and mentoring experience,
+          helping students understand programming, operating systems,
+          software engineering and cybersecurity concepts.
+        </p>
+
+      </div>
+
+
+      <div class="experience-card">
+
+        <div class="role">
+          Eco-Car Competition Team
+        </div>
+
+        <div class="org">
+          University Competition Project
+        </div>
+
+        <p>
+          Served in a communication and coordination role within an
+          engineering team that developed an electric vehicle and
+          placed second in the competition.
+        </p>
+
+      </div>
+
+
+      <div class="experience-card">
+
+        <div class="role">
+          Huawei ICT Competition
+        </div>
+
+        <div class="org">
+          Computing Track
+        </div>
+
+        <p>
+          Involved in supporting and coordinating students participating
+          in the Huawei ICT Competition computing track.
+        </p>
+
+      </div>
+
+
+      <div class="experience-card">
+
+        <div class="role">
+          Hackathon Organising Team
+        </div>
+
+        <div class="org">
+          Electrical Engineering Society // VUT
+        </div>
+
+        <p>
+          Involved in planning a 24-hour university hackathon focused on
+          software and hardware solutions to real campus problems.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       SKILLS
+  ========================== -->
+
+  <section id="skills">
+
+    <div class="sec-head">
+
+      <span class="sec-num">
+        03
+      </span>
+
+      <span class="sec-title">
+        Skills.dat
+      </span>
+
+    </div>
+
+    <p class="dim">
+      // current technical stack — continuously expanding
+    </p>
+
+
+    <div class="skill-group">
+
+      <div class="skill-group-title">
+        Programming
+      </div>
+
+      <div class="skill-tags">
+
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">C++</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">Java</span>
+        <span class="skill-tag">Bash</span>
+        <span class="skill-tag">Assembly</span>
+
+      </div>
+
+    </div>
+
+
+    <div class="skill-group">
+
+      <div class="skill-group-title">
+        Web & Backend
+      </div>
+
+      <div class="skill-tags">
+
+        <span class="skill-tag">Flask</span>
+        <span class="skill-tag">HTML</span>
+        <span class="skill-tag">CSS</span>
+        <span class="skill-tag">Jinja</span>
+        <span class="skill-tag">SQLite</span>
+        <span class="skill-tag">MySQL</span>
+        <span class="skill-tag">Spring Boot</span>
+
+      </div>
+
+    </div>
+
+
+    <div class="skill-group">
+
+      <div class="skill-group-title">
+        Cybersecurity & Networking
+      </div>
+
+      <div class="skill-tags">
+
+        <span class="skill-tag">Kali Linux</span>
+        <span class="skill-tag">Wireshark</span>
+        <span class="skill-tag">Nmap</span>
+        <span class="skill-tag">Metasploit</span>
+        <span class="skill-tag">Burp Suite</span>
+        <span class="skill-tag">Networking</span>
+        <span class="skill-tag">OSINT</span>
+        <span class="skill-tag">Ethical Hacking</span>
+
+      </div>
+
+    </div>
+
+
+    <div class="skill-group">
+
+      <div class="skill-group-title">
+        Systems & Hardware
+      </div>
+
+      <div class="skill-tags">
+
+        <span class="skill-tag">Raspberry Pi</span>
+        <span class="skill-tag">ESP32</span>
+        <span class="skill-tag">Arduino</span>
+        <span class="skill-tag">IoT</span>
+        <span class="skill-tag">Linux</span>
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">Docker</span>
+
+      </div>
+
+    </div>
+
 
     <div class="quote-box">
-      <b style="color:#fff;">Unpopular opinion:</b> front-end and back-end have to work together for a project to breathe but I still despise front-end.
+
+      <b style="color:#fff;">
+        Current direction:
+      </b>
+
+      Security engineering.
+
+      <span class="dim">
+        Build systems. Understand systems. Break them responsibly.
+        Secure them properly.
+      </span>
+
     </div>
 
-    <div class="broken-cat">
-      <p class="caption">exhibit A through C: how I actually look debugging CSS</p>
-      <div class="meme-grid">
-        <div class="meme">
-          <img src="https://images.pexels.com/photos/19147470/pexels-photo-19147470.jpeg?auto=compress&cs=tinysrgb&h=627&fit=crop&w=1200" alt="startled wide-eyed cat, meme captioned about seeing unindented code">
-          <span class="cap top">ME SEEING</span>
-          <span class="cap bottom">UNINDENTED CODE</span>
-        </div>
-        <div class="meme">
-          <img src="https://images.pexels.com/photos/18137890/pexels-photo-18137890.jpeg?auto=compress&cs=tinysrgb&h=627&fit=crop&w=1200" alt="calico cat lounging smugly on a chair, meme captioned about pushing straight to main">
-          <span class="cap top">WHEN IT WORKS</span>
-          <span class="cap bottom">FIRST TRY (SUSPICIOUS)</span>
-        </div>
-        <div class="meme">
-          <img src="https://images.pexels.com/photos/4587960/pexels-photo-4587960.jpeg?auto=compress&cs=tinysrgb&h=627&fit=crop&w=1200" alt="tabby cat wearing sunglasses, meme captioned about running a penetration test">
-          <span class="cap top">ME, RUNNING</span>
-          <span class="cap bottom">A "PEN TEST"</span>
-        </div>
-      </div>
-      <pre class="ascii-cat"> /\_/\
-( o.o )
- > ^ <</pre>
-      <small>backup cat.txt for when the wifi (or my patience for front-end) goes down.</small>
-    </div>
   </section>
 
-  <!-- 03 FUTURE GOALS -->
-  <section id="goals">
+
+  <!-- =========================
+       PROJECTS
+  ========================== -->
+
+  <section id="projects">
+
     <div class="sec-head">
-      <span class="sec-num">03</span>
-      <span class="sec-title">Future_Goals</span>
+
+      <span class="sec-num">
+        04
+      </span>
+
+      <span class="sec-title">
+        Projects/
+      </span>
+
     </div>
-    <div class="classified" tabindex="0">
-      <span class="stamp">CLASSIFIED</span>
-      <p class="redacted">
-        I normally keep this to myself because... "keep it private until it's permanent" but here's the a sneak peak:
-        I'm working toward becoming a data engineer for a few major companies, with an honorable mention for <b>Google</b>.
-        My reasoning is simple think about the sheer volume of data flowing through a company like that. Getting to work
-        across datasets at that scale is mind blowing to me so think about it..
-      </p>
-      <p class="hint">hover / tap to decrypt file</p>
+
+    <p class="dim">
+      // things I've built, broken, rebuilt and learned from
+    </p>
+
+
+    <div class="projects-grid">
+
+
+      <div class="project-card">
+
+        <span class="project-number">
+          001
+        </span>
+
+        <h3>
+          JARVIS
+        </h3>
+
+        <span class="project-type">
+          Local AI // Systems
+        </span>
+
+        <p>
+          A locally hosted AI assistant built around Python and Ollama.
+          The project focuses on local inference, persistent memory,
+          task handling and eventually turning a Raspberry Pi into a
+          personal AI system.
+        </p>
+
+        <div class="project-tech">
+          <span>Stack:</span>
+          Python · Ollama · SQLite · Flask · Linux · Raspberry Pi
+        </div>
+
+      </div>
+
+
+      <div class="project-card">
+
+        <span class="project-number">
+          002
+        </span>
+
+        <h3>
+          Cybersecurity Platform
+        </h3>
+
+        <span class="project-type">
+          Cybersecurity // Backend
+        </span>
+
+        <p>
+          A modular cybersecurity platform designed around practical
+          security operations. One of the modules focuses on asset
+          management and collecting system, network and health information.
+        </p>
+
+        <div class="project-tech">
+          <span>Focus:</span>
+          Asset Management · Network Information · System Health · CRUD
+        </div>
+
+      </div>
+
+
+      <div class="project-card">
+
+        <span class="project-number">
+          003
+        </span>
+
+        <h3>
+          BrainSteady Tech
+        </h3>
+
+        <span class="project-type">
+          Web Platform
+        </span>
+
+        <p>
+          A technology-focused platform built around productivity,
+          tutoring, announcements and technical services.
+        </p>
+
+        <div class="project-tech">
+          <span>Stack:</span>
+          HTML · CSS · Bootstrap · GitHub Pages
+        </div>
+
+      </div>
+
+
+      <div class="project-card">
+
+        <span class="project-number">
+          004
+        </span>
+
+        <h3>
+          SocialHub / BlogHub
+        </h3>
+
+        <span class="project-type">
+          Web Development
+        </span>
+
+        <p>
+          A Flask-based web application developed to practice backend
+          architecture, routing, authentication flows and form handling.
+        </p>
+
+        <div class="project-tech">
+          <span>Stack:</span>
+          Python · Flask · Jinja · HTML · CSS
+        </div>
+
+      </div>
+
+
+      <div class="project-card">
+
+        <span class="project-number">
+          005
+        </span>
+
+        <h3>
+          Financial Accountability System
+        </h3>
+
+        <span class="project-type">
+          Software // Personal Finance
+        </span>
+
+        <p>
+          A strict financial decision system designed to challenge a
+          purchase before money is spent. The system evaluates whether
+          something is a need or want, its benefit and whether the money
+          can realistically be recovered.
+        </p>
+
+        <div class="project-tech">
+          <span>Focus:</span>
+          Decision Logic · Budgeting · Purchase Analysis
+        </div>
+
+      </div>
+
+
+      <div class="project-card">
+
+        <span class="project-number">
+          006
+        </span>
+
+        <h3>
+          Eco-Car Competition
+        </h3>
+
+        <span class="project-type">
+          Engineering // Hardware
+        </span>
+
+        <p>
+          An electric vehicle engineering project involving mechanical,
+          electrical and team coordination work. The vehicle incorporated
+          a motor, braking system, steering and solar-assisted charging.
+        </p>
+
+        <div class="project-tech">
+          <span>Focus:</span>
+          Electrical Systems · Hardware · Team Coordination
+        </div>
+
+      </div>
+
+
     </div>
+
   </section>
 
+
+  <!-- =========================
+       CAREER DIRECTION
+  ========================== -->
+
+  <section id="goals">
+
+    <div class="sec-head">
+
+      <span class="sec-num">
+        05
+      </span>
+
+      <span class="sec-title">
+        Career_Direction
+      </span>
+
+    </div>
+
+
+    <div class="classified">
+
+      <span class="stamp">
+        TARGET
+      </span>
+
+      <p>
+        My current career direction is
+        <strong>Security Engineering</strong>.
+      </p>
+
+      <p>
+        I'm interested in the engineering side of cybersecurity:
+        understanding infrastructure, networks, endpoints and software,
+        identifying weaknesses and building systems that are harder to
+        compromise.
+      </p>
+
+      <ul class="career-list">
+
+        <li>
+          Security Engineering
+        </li>
+
+        <li>
+          Network Security
+        </li>
+
+        <li>
+          Security Operations &amp; Defensive Security
+        </li>
+
+        <li>
+          Vulnerability &amp; Threat Analysis
+        </li>
+
+        <li>
+          Systems &amp; Infrastructure Security
+        </li>
+
+      </ul>
+
+      <p class="dim">
+        // objective: turn academic knowledge into demonstrable
+        // engineering capability.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       ACHIEVEMENTS
+  ========================== -->
+
+  <section id="achievements">
+
+    <div class="sec-head">
+
+      <span class="sec-num">
+        06
+      </span>
+
+      <span class="sec-title">
+        Achievements.log
+      </span>
+
+    </div>
+
+    <div class="achievement-grid">
+
+
+      <div class="achievement">
+
+        <h3>
+          Cisco Certified Ethical Hacker
+        </h3>
+
+        <p>
+          Completed and presented the CCEP certification.
+        </p>
+
+      </div>
+
+
+      <div class="achievement">
+
+        <h3>
+          Huawei ICT Academy Ambassador
+        </h3>
+
+        <p>
+          Representing and supporting Huawei ICT Academy activities
+          at Vaal University of Technology.
+        </p>
+
+      </div>
+
+
+      <div class="achievement">
+
+        <h3>
+          Electrical Engineering Society
+        </h3>
+
+        <p>
+          Serving as Chairperson while contributing to student
+          development and technical initiatives.
+        </p>
+
+      </div>
+
+
+      <div class="achievement">
+
+        <h3>
+          Eco-Car Competition
+        </h3>
+
+        <p>
+          Engineering team placed second in the competition.
+        </p>
+
+      </div>
+
+
+      <div class="achievement">
+
+        <h3>
+          Huawei ICT Competition
+        </h3>
+
+        <p>
+          Involved in supporting and coordinating the Computing Track.
+        </p>
+
+      </div>
+
+
+      <div class="achievement">
+
+        <h3>
+          Student Mentorship
+        </h3>
+
+        <p>
+          Approximately three years of tutoring and mentoring across
+          programming, software engineering and cybersecurity.
+        </p>
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       LIKES
+  ========================== -->
 
   <section id="likes">
+
     <div class="sec-head">
-      <span class="sec-num">04</span>
-      <span class="sec-title">Likes // Dislikes</span>
+
+      <span class="sec-num">
+        07
+      </span>
+
+      <span class="sec-title">
+        Likes // Dislikes
+      </span>
+
     </div>
+
     <table>
+
       <thead>
-        <tr><th>Likes.log</th><th>Dislikes.log</th></tr>
+
+        <tr>
+          <th>Likes.log</th>
+          <th>Dislikes.log</th>
+        </tr>
+
       </thead>
+
       <tbody>
-        <tr><td>Food</td><td>Gossip</td></tr>
-        <tr><td>Basketball</td><td>Soccer</td></tr>
-        <tr><td>Cats</td><td>Small talk</td></tr>
-        <tr><td>Retro tech &amp; synthwave</td><td>Front-end debugging</td></tr>
-        <tr><td>The Last of Us Part II</td><td>Spoilers</td></tr>
-        <tr><td>Late night coding sessions</td><td>Slow wifi</td></tr>
-        <tr><td>The command line</td><td>Overly-cluttered GUIs</td></tr>
-        <tr><td>A good plot twist</td><td>Predictable endings</td></tr>
+
+        <tr>
+          <td>Cybersecurity</td>
+          <td>Unnecessary complexity</td>
+        </tr>
+
+        <tr>
+          <td>Networking</td>
+          <td>Small talk</td>
+        </tr>
+
+        <tr>
+          <td>Programming</td>
+          <td>Slow Wi-Fi</td>
+        </tr>
+
+        <tr>
+          <td>Backend systems</td>
+          <td>Frontend debugging</td>
+        </tr>
+
+        <tr>
+          <td>Gaming</td>
+          <td>Spoilers</td>
+        </tr>
+
+        <tr>
+          <td>Chess</td>
+          <td>Redundant work</td>
+        </tr>
+
+        <tr>
+          <td>Technology</td>
+          <td>Overly-cluttered interfaces</td>
+        </tr>
+
+        <tr>
+          <td>Good stories</td>
+          <td>Predictable endings</td>
+        </tr>
+
       </tbody>
+
     </table>
+
   </section>
+
+
+  <!-- =========================
+       PUNS
+  ========================== -->
 
   <section id="puns">
+
     <div class="sec-head">
-      <span class="sec-num">05</span>
-      <span class="sec-title">Puns_&amp;_Quotes.txt</span>
+
+      <span class="sec-num">
+        08
+      </span>
+
+      <span class="sec-title">
+        Puns_&_Quotes.txt
+      </span>
+
     </div>
-    <p class="dim">// a random sample from the buffer. refresh reality to shuffle.</p>
+
+    <p class="dim">
+      // because every serious portfolio needs at least a little nonsense
+    </p>
+
     <div class="pun-grid">
+
+
       <div class="pun-card">
-        <span class="tag">pun</span>
-        <p>I'd tell you a UDP joke, but you might not get it.</p>
+
+        <span class="tag">
+          networking
+        </span>
+
+        <p>
+          I'd tell you a UDP joke, but you might not get it.
+        </p>
+
       </div>
+
+
       <div class="pun-card">
-        <span class="tag">quote</span>
-        <p>There are only two hard things in computer science: cache invalidation, naming things, and off-by-one errors.</p>
-        <span class="by"> programmer folklore</span>
+
+        <span class="tag">
+          localhost
+        </span>
+
+        <p>
+          There is no place like 127.0.0.1.
+        </p>
+
       </div>
+
+
       <div class="pun-card">
-        <span class="tag">pun</span>
-        <p>Why do cats make terrible storytellers? They only have one tail.</p>
+
+        <span class="tag">
+          programming
+        </span>
+
+        <p>
+          My code doesn't have bugs. It develops undocumented features.
+        </p>
+
       </div>
+
+
       <div class="pun-card">
-        <span class="tag">hacking</span>
-        <p>Passwords are like underwear: change them often, don't share them, and don't leave them lying around.</p>
+
+        <span class="tag">
+          security
+        </span>
+
+        <p>
+          Security is basically assuming something will break before it does.
+        </p>
+
       </div>
+
+
       <div class="pun-card">
-        <span class="tag">pun</span>
-        <p>I've got a great joke about TCP, but I'll only tell it if you're ready to receive it.</p>
+
+        <span class="tag">
+          debugging
+        </span>
+
+        <p>
+          It worked five minutes ago. Therefore, obviously, the network is
+          guilty.
+        </p>
+
       </div>
+
+
       <div class="pun-card">
-        <span class="tag">quote</span>
-        <p>The most dangerous phrase in the language is "we've always done it this way."</p>
-        <span class="by">— Grace Hopper</span>
+
+        <span class="tag">
+          engineering
+        </span>
+
+        <p>
+          Engineering: turning "this should work" into a 47-step debugging
+          session.
+        </p>
+
       </div>
-      <div class="pun-card">
-        <span class="tag">pun</span>
-        <p>My code doesn't have bugs. It just develops random features.</p>
-      </div>
-      <div class="pun-card">
-        <span class="tag">gaming</span>
-        <p>In The Last of Us Part II, everyone's the protagonist of their own story. Also, never trust a golf club.</p>
-      </div>
+
+
     </div>
+
   </section>
 
+
+  <!-- =========================
+       CONTACT
+  ========================== -->
 
   <section id="contact">
+
     <div class="sec-head">
-      <span class="sec-num">06</span>
-      <span class="sec-title">Contact</span>
+
+      <span class="sec-num">
+        09
+      </span>
+
+      <span class="sec-title">
+        Contact
+      </span>
+
     </div>
-    <p class="dim">// fill in the fields below a programmer's job is to make your life simpler (mine first, though).</p>
+
+    <p class="dim">
+      // establish communication channel
+    </p>
 
     <form id="contact-form">
+
       <div class="term-field">
-        <label for="name">NAME</label>
-        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+        <label for="name">
+          NAME
+        </label>
+
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Enter your name"
+          required
+        >
+
       </div>
+
+
       <div class="term-field">
-        <label for="email">EMAIL</label>
-        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+        <label for="email">
+          EMAIL
+        </label>
+
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Enter your email"
+          required
+        >
+
       </div>
-      <button type="submit" class="send-btn">[ SEND_TRANSMISSION ]</button>
-      <div class="send-note" id="send-note"></div>
+
+
+      <div class="term-field">
+
+        <label for="message">
+          MESSAGE
+        </label>
+
+        <textarea
+          id="message"
+          name="message"
+          placeholder="Enter your message"
+          required
+        ></textarea>
+
+      </div>
+
+
+      <button
+        type="submit"
+        class="send-btn"
+      >
+        [ SEND_TRANSMISSION ]
+      </button>
+
+      <div
+        class="send-note"
+        id="send-note"
+      ></div>
+
     </form>
+
   </section>
 
+
+  <!-- =========================
+       PLATFORMS
+  ========================== -->
 
   <section id="platforms">
+
     <div class="sec-head">
-      <span class="sec-num">07</span>
-      <span class="sec-title">Platforms</span>
+
+      <span class="sec-num">
+        10
+      </span>
+
+      <span class="sec-title">
+        Platforms
+      </span>
+
     </div>
+
     <div class="dirlist">
-      <div class="row"><span class="perm">drwxr-xr-x</span><a href="https://github.com/LoelStark" target="_blank" rel="noopener">github/LoelStark</a></div>
-      <div class="row"><span class="perm">drwxr-xr-x</span><a href="#" target="_blank" rel="noopener">linkedIn/Doctor-Mkhonza</a></div>
+
+
+      <div class="row">
+
+        <span class="perm">
+          drwxr-xr-x
+        </span>
+
+        <a
+          href="https://github.com/LoelStark"
+          target="_blank"
+          rel="noopener"
+        >
+          github/LoelStark
+        </a>
+
+      </div>
+
+
+      <div class="row">
+
+        <span class="perm">
+          drwxr-xr-x
+        </span>
+
+        <a
+          href="https://www.linkedin.com/in/doctor-mkhonza/"
+          target="_blank"
+          rel="noopener"
+        >
+          linkedin/Doctor-Mkhonza
+        </a>
+
+      </div>
+
+
     </div>
+
   </section>
 
-  
+
+  <!-- =========================
+       TERMINAL
+  ========================== -->
+
   <div class="console">
-    <div class="console-out" id="console-out">
-      <div class="line sys">Type 'help' for a list of commands. Try 'cat' or 'joke' if you dare.</div>
+
+    <div
+      class="console-out"
+      id="console-out"
+    >
+
+      <div class="line sys">
+        JARVIS portfolio interface initialized.
+      </div>
+
+      <div class="line sys">
+        Type 'help' for available commands.
+      </div>
+
     </div>
+
+
     <div class="console-line">
-      <span class="p">guest@loel:~$</span>
-      <input type="text" id="console-in" autocomplete="off" spellcheck="false" placeholder="type a command...">
+
+      <span class="p">
+        guest@loel:~$
+      </span>
+
+      <input
+        type="text"
+        id="console-in"
+        autocomplete="off"
+        spellcheck="false"
+        placeholder="type a command..."
+      >
+
     </div>
+
   </div>
 
-  <footer>© <span id="year"></span> LOEL — BUILT WITH HTML, CSS, AND MILD PARANOIA</footer>
+
+  <footer>
+
+    © <span id="year"></span>
+    LOEL
+
+    —
+    BUILT WITH HTML, CSS, PYTHON, CURIOSITY AND MILD PARANOIA
+
+  </footer>
+
 </div>
 
+
 <script>
-  document.getElementById('year').textContent = new Date().getFullYear();
 
-  // fake contact form handling (static site, no backend) I'll fix this later
-  const form = document.getElementById('contact-form');
-  const note = document.getElementById('send-note');
-  form.addEventListener('submit', function(e){
+/* =========================
+   YEAR
+========================= */
+
+document.getElementById('year').textContent =
+  new Date().getFullYear();
+
+
+/* =========================
+   CONTACT FORM
+========================= */
+
+const form =
+  document.getElementById('contact-form');
+
+const note =
+  document.getElementById('send-note');
+
+form.addEventListener(
+  'submit',
+  function(e){
+
     e.preventDefault();
-    note.textContent = 'Transmission received. Standing by for a reply.';
-  });
+
+    note.textContent =
+      'Transmission received. Standing by for a reply.';
+
+  }
+);
 
 
-  const out = document.getElementById('console-out');
-  const input = document.getElementById('console-in');
+/* =========================
+   TERMINAL
+========================= */
 
-  function printLine(text, cls){
-    const div = document.createElement('div');
-    div.className = 'line ' + (cls || '');
-    div.textContent = text;
-    out.appendChild(div);
-    out.scrollTop = out.scrollHeight;
+const out =
+  document.getElementById('console-out');
+
+const input =
+  document.getElementById('console-in');
+
+
+function printLine(text, cls){
+
+  const div =
+    document.createElement('div');
+
+  div.className =
+    'line ' + (cls || '');
+
+  div.textContent =
+    text;
+
+  out.appendChild(div);
+
+  out.scrollTop =
+    out.scrollHeight;
+}
+
+
+/* =========================
+   JOKES
+========================= */
+
+const jokes = [
+
+  'why did the hacker cross the road? to get to the other IDE.',
+
+  'there is no place like 127.0.0.1',
+
+  'a SQL query walks into a bar, walks up to two tables and asks, "can I join you?"',
+
+  'my firewall and I have a very strict relationship. Nothing gets through.',
+
+  'I would tell you a TCP joke, but you need to establish a connection first.'
+
+];
+
+
+/* =========================
+   COMMANDS
+========================= */
+
+const commands = {
+
+
+  help:function(){
+
+    printLine(
+      'available commands: help, about, experience, skills, projects, goals, achievements, likes, puns, contact, platforms, cat, joke, clear',
+      'sys'
+    );
+
+  },
+
+
+  about:function(){
+
+    document
+      .getElementById('about')
+      .scrollIntoView({
+        behavior:'smooth'
+      });
+
+  },
+
+
+  experience:function(){
+
+    document
+      .getElementById('experience')
+      .scrollIntoView({
+        behavior:'smooth'
+      });
+
+  },
+
+
+  skills:function(){
+
+    document
+      .getElementById('skills')
+      .scrollIntoView({
+        behavior:'smooth'
+      });
+
+  },
+
+
+  projects:function(){
+
+    document
+      .getElementById('projects')
+      .scrollIntoView({
+        behavior:'smooth'
+      });
+
+  },
+
+
+  goals:function(){
+
+    document
+      .getElementById('goals')
+      .scrollIntoView({
+        behavior:'smooth'
+      });
+
+  },
+
+
+  achievements:function(){
+
+    document
+      .getElementById('achievements')
+      .scrollIntoView({
+        behavior:'smooth'
+      });
+
+  },
+
+
+  likes:function(){
+
+    document
+      .getElementById('likes')
+      .scrollIntoView({
+        behavior:'smooth'
+      });
+
+  },
+
+
+  puns:function(){
+
+    document
+      .getElementById('puns')
+      .scrollIntoView({
+        behavior:'smooth'
+      });
+
+  },
+
+
+  contact:function(){
+
+    document
+      .getElementById('contact')
+      .scrollIntoView({
+        behavior:'smooth'
+      });
+
+  },
+
+
+  platforms:function(){
+
+    document
+      .getElementById('platforms')
+      .scrollIntoView({
+        behavior:'smooth'
+      });
+
+  },
+
+
+  cat:function(){
+
+    printLine(
+      ' /\\_/\\ ',
+      'sys'
+    );
+
+    printLine(
+      '( ^.^ )  meow. you found the easter egg.',
+      'sys'
+    );
+
+    printLine(
+      ' > ^ <  fun fact: cat is also a real linux command.',
+      'sys'
+    );
+
+  },
+
+
+  joke:function(){
+
+    printLine(
+      jokes[
+        Math.floor(
+          Math.random() * jokes.length
+        )
+      ],
+      'sys'
+    );
+
+  },
+
+
+  clear:function(){
+
+    out.innerHTML = '';
+
   }
 
-  const jokes = [
-    'why did the hacker cross the road? to get to the other IDE.',
-    'there is no place like 127.0.0.1',
-    'a SQL query walks into a bar, walks up to two tables and asks, "can I join you?"'
-  ];
+};
 
-  const commands = {
-    help: function(){
-      printLine('available commands: help, about, skills, goals, likes, puns, contact, platforms, cat, joke, clear', 'sys');
-    },
-    about: function(){ document.getElementById('about').scrollIntoView({behavior:'smooth'}); },
-    skills: function(){ document.getElementById('skills').scrollIntoView({behavior:'smooth'}); },
-    goals: function(){ document.getElementById('goals').scrollIntoView({behavior:'smooth'}); },
-    likes: function(){ document.getElementById('likes').scrollIntoView({behavior:'smooth'}); },
-    puns: function(){ document.getElementById('puns').scrollIntoView({behavior:'smooth'}); },
-    contact: function(){ document.getElementById('contact').scrollIntoView({behavior:'smooth'}); },
-    platforms: function(){ document.getElementById('platforms').scrollIntoView({behavior:'smooth'}); },
-    cat: function(){
-      printLine(' /\\_/\\ ', 'sys');
-      printLine('( ^.^ )  meow. you found the easter egg.', 'sys');
-      printLine(' > ^ <  fun fact: cat is also a real linux command.', 'sys');
-    },
-    joke: function(){
-      printLine(jokes[Math.floor(Math.random() * jokes.length)], 'sys');
-    },
-    clear: function(){ out.innerHTML = ''; }
-  };
 
-  input.addEventListener('keydown', function(e){
+/* =========================
+   TERMINAL INPUT
+========================= */
+
+input.addEventListener(
+  'keydown',
+  function(e){
+
     if(e.key === 'Enter'){
-      const val = input.value.trim();
+
+      const val =
+        input.value.trim();
+
       if(val.length){
-        printLine('guest@loel:~$ ' + val, 'echo');
-        const cmd = commands[val.toLowerCase()];
-        if(cmd){ cmd(); }
-        else { printLine('command not found: ' + val + ' — try "help"', 'sys'); }
+
+        printLine(
+          'guest@loel:~$ ' + val,
+          'echo'
+        );
+
+        const cmd =
+          commands[
+            val.toLowerCase()
+          ];
+
+        if(cmd){
+
+          cmd();
+
+        }else{
+
+          printLine(
+            'command not found: ' +
+            val +
+            ' — try "help"',
+            'sys'
+          );
+
+        }
+
       }
+
       input.value = '';
+
     }
-  });
+
+  }
+);
+
 </script>
 
 </body>
